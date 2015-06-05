@@ -39,5 +39,47 @@ $app->get('/', function() use ($app) {
 
 })->name('inicio');
 
+//Página nuevas notificaciones
+$app->get('/nueva_notificacion', function() use ($app) {
+
+    $app->render('nueva_notificacion.html.twig');
+
+})->name('nueva_notificacion');
+
+//Página listar notificaciones
+$app->get('/listar_notificacion', function() use ($app) {
+
+    $app->render('listar_notificacion.html.twig');
+
+})->name('listar_notificacion');
+
+//Página nuevo contrato
+$app->get('/nuevo_contrato', function() use ($app) {
+
+    $app->render('nuevo_contrato.html.twig');
+
+})->name('nuevo_contrato');
+
+//Página listar contratos
+$app->get('/listar_contrato', function() use ($app) {
+
+    $app->render('listar_contrato.html.twig');
+
+})->name('listar_contrato');
+
+//Página nuevo usuario
+$app->get('/nuevo_usuario', function() use ($app) {
+
+    $app->render('nuevo_usuario.html.twig');
+
+})->name('nuevo_usuario');
+
+//Página listar usuarios
+$app->get('/listar_usuario', function() use ($app) {
+
+    $app->render('listar_usuario.html.twig');
+
+})->name('listar_usuario');
+
 
 $app->run();

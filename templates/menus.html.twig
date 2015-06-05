@@ -223,8 +223,8 @@
                         </form>
                         <!-- END RESPONSIVE QUICK SEARCH FORM -->
                     </li>
-                    <li class="start active open">
-                        <a href="javascript:;">
+                    <li>
+                        <a href="/">
                             <i class="icon-home"></i>
                             <span class="title">Inicio</span>
                             <span class="selected"></span>
@@ -234,16 +234,18 @@
                         <a href="javascript:;">
                             <i class="icon-bell"></i>
                             <span class="title">Notificaciones</span>
-                            <span class="arrow "></span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
                         </a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="#">
-                                    <i class="icon-plus"></i>Nueva
-                                    </a>
+                                <a href="/nueva_notificacion">
+                                    <i class="icon-plus"></i> Nueva
+                                    <span class="selected"></span>
+                                </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="/listar_notificacion">
                                     <i class="icon-list"></i>
                                     Listar</a>
                             </li>
@@ -257,11 +259,11 @@
                         </a>
                         <ul class="sub-menu">
                             <li>
-                               <a href="#"> <i class="icon-plus"></i>
+                               <a href="/nuevo_contrato"> <i class="icon-plus"></i>
                                     Nuevo</a>
                             </li>
                             <li>
-                                <a href="#"><i class="icon-list"></i>
+                                <a href="/listar_contrato"><i class="icon-list"></i>
                                     Listar</a>
                             </li>
                         </ul>
@@ -274,11 +276,11 @@
                         </a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="#"><i class="icon-user-follow"></i>
+                                <a href="nuevo_usuario"><i class="icon-user-follow"></i>
                                     Nuevo</a>
                             </li>
                             <li>
-                                <a href="#"><i class="icon-list"></i>
+                                <a href="listar_usuario"><i class="icon-list"></i>
                                     Listar</a>
                             </li>
                         </ul>
@@ -313,6 +315,7 @@
                 </div>
                 <!-- /.modal -->
                 <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+                {% block content %}
                 <!-- BEGIN PAGE HEADER-->
                 <h3 class="page-title">
                     Dashboard <small>reports & statistics</small>
@@ -335,6 +338,7 @@
                     </div>
                 </div>
                 <!-- END PAGE HEADER-->
+
                 <!-- BEGIN DASHBOARD STATS -->
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -2440,6 +2444,7 @@
                         <!-- END PORTLET-->
                     </div>
                 </div>
+                {% endblock %}
             </div>
         </div>
         <!-- END CONTENT -->
