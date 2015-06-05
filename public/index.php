@@ -35,6 +35,9 @@ session_start();
 //Página de inicio de la aplicación
 $app->get('/', function() use ($app) {
 
-        $app->render('base.html.twig');
+        $app->render('inicio.html.twig');
 
 })->name('inicio');
+
+
+$app->run();

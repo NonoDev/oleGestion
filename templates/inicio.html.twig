@@ -1,15 +1,6 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="icon" type="image/ico" href="" />
-        <title>{% block titulo %} {% endblock %}</title>
-        {% block stylesheets %} {% endblock %}
-    </head>
-    <body>
-        {% block contenido %}
-            <h1>prueba</h1>
-        {% endblock %}
+{% extends 'menus.html.twig' %}
 
-        {% block scripts %} {% endblock %}
-    </body>
-</html>
+{% block content %}
+    <h1>Holiii</h1>
+
+{% endblock %}
