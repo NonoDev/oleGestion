@@ -34,10 +34,19 @@ session_start();
 
 //Página de inicio de la aplicación
 $app->get('/', function() use ($app) {
-
+    if(isset($_SESSION['usuarioLogin'])){
         $app->render('inicio.html.twig');
+    }else {
+        $app->render('login.html.twig');
+    }
 
 })->name('inicio');
+
+
+$app->get('/logout', function() use ($app) {
+    session_destroy();
+    $app->redirect($app->router()->urlFor('inicio'));
+});
 
 //Página nuevas notificaciones
 $app->get('/nueva_notificacion', function() use ($app) {
@@ -86,5 +95,23 @@ $app->get('/listar_usuario', function() use ($app) {
 
 })->name('listar_usuario');
 
+// -------------------------------------- BOTONES ------------------------------------------------
+
+$app->post('/', function() use ($app) {
+    if(isset($_POST['botonLogin'])){
+        $nombreUser = htmlentities($_POST['username']);
+        $passUser = htmlentities($_POST['password']);
+        $cons = ORM::for_table('usuario')
+            ->where('nombre_usuario',$nombreUser)
+            ->where('password', $passUser)
+            ->find_one();
+        if($cons){
+            $_SESSION['usuarioLogin'] = $cons;
+            $app->render('inicio.html.twig');
+        }else{
+            $app->render('login.html.twig',array('errorLogin' => 'ok'));
+        }
+    }
+});
 
 $app->run();
