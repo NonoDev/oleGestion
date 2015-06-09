@@ -39,13 +39,21 @@ $app->get('/', function() use ($app) {
     }else {
         $app->render('login.html.twig');
     }
-
 })->name('inicio');
 
-
+//Cuando pulsas en logout
 $app->get('/logout', function() use ($app) {
     session_destroy();
     $app->redirect($app->router()->urlFor('inicio'));
+});
+
+//Página para las nuevas notificaciones
+$app->get('/nueva_notificacion', function() use ($app) {
+    if(isset($_SESSION['usuarioLogin'])){
+        $app->render('inicio.html.twig');
+    }else {
+        $app->render('login.html.twig');
+    }
 });
 
 //Página nuevas notificaciones
@@ -98,20 +106,32 @@ $app->get('/listar_usuario', function() use ($app) {
 // -------------------------------------- BOTONES ------------------------------------------------
 
 $app->post('/', function() use ($app) {
-    if(isset($_POST['botonLogin'])){
+    if(isset($_POST['username'])){        
         $nombreUser = htmlentities($_POST['username']);
         $passUser = htmlentities($_POST['password']);
         $cons = ORM::for_table('usuario')
             ->where('nombre_usuario',$nombreUser)
             ->where('password', $passUser)
-            ->find_one();
+            ->find_one();        
         if($cons){
+            $datetimeActual = date('Y-m-d H:i:s');
+            $userAModificar = ORM::for_table('usuario')->find_one($cons['id']);
+            $userAModificar->ultima_conexion = $datetimeActual;
+            $userAModificar->save();
+
+            $cons = ORM::for_table('usuario')
+            ->where('nombre_usuario',$nombreUser)
+            ->where('password', $passUser)
+            ->find_one(); 
+
             $_SESSION['usuarioLogin'] = $cons;
             $app->render('inicio.html.twig');
         }else{
             $app->render('login.html.twig',array('errorLogin' => 'ok'));
         }
     }
+
+    
 });
 
 $app->run();
