@@ -16,4 +16,86 @@
             </li>
         </ul>
     </div>
+    <div class="portlet box blue">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>Bordered Bootstrap 3.0 Responsive Table
+            </div>
+            <div class="tools">
+                <a title="" data-original-title="" href="javascript:;" class="collapse">
+                </a>
+                <a title="" data-original-title="" href="#portlet-config" data-toggle="modal" class="config">
+                </a>
+                <a title="" data-original-title="" href="javascript:;" class="reload">
+                </a>
+                <a title="" data-original-title="" href="javascript:;" class="remove">
+                </a>
+            </div>
+        </div>
+        {% if usuarios %}
+        <div class="portlet-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>
+                            Usuario
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Apellidos
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Rol
+                        </th>
+                        <th>
+                            Notificaciones
+                        </th>
+                        <th>
+                            Acciones
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in usuarios %}
+                    <tr>
+                        <td>
+                            {{ user.nombre_usuario }}
+                        </td>
+                        <td>
+                            {{ user.nombre }}
+                        </td>
+                        <td>
+                            {{ user.apellidos }}
+                        </td>
+                        <td>
+                            {{ user.email }}
+                        </td>
+                        <td>
+                            {{ user.rol }}
+                        </td>
+                        <td>
+                            {% if user.notificaciones_carga == true %} Habilitado {% else %} No habilitado {% endif %}
+                        </td>
+                        <td>
+                            <button name="editar" class="btn btn-icon-only blue">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button name="eliminar" class="btn btn-icon-only red">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            {% endif %}
+    </div>
 {% endblock %}

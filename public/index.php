@@ -77,7 +77,12 @@ $app->get('/nuevo_usuario', function() use ($app) {
 //Página listar usuarios
 $app->get('/listar_usuario', function() use ($app) {
 
-    $app->render('listar_usuario.html.twig');
+    $usuarios = ORM::for_table('usuario')
+        ->find_many();
+
+    $app->render('listar_usuario.html.twig', [
+        'usuarios' => $usuarios
+    ]);
 
 })->name('listar_usuario');
 
