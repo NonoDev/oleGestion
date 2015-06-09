@@ -72,8 +72,17 @@ $app->get('/listar_notificacion', function() use ($app) {
 
 //Página nuevo contrato
 $app->get('/nuevo_contrato', function() use ($app) {
+    $soc = ORM::for_table('usuario')
+    ->where('rol','Socio')
+    ->find_many();
+    $corr = ORM::for_table('usuario')
+    ->where('rol','Corredor')
+    ->find_many();
+    $comp = ORM::for_table('usuario')
+    ->where('rol','Comprador')
+    ->find_many();
 
-    $app->render('nuevo_contrato.html.twig');
+    $app->render('nuevo_contrato.html.twig',array('socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
 
 })->name('nuevo_contrato');
 
@@ -131,6 +140,20 @@ $app->post('/', function() use ($app) {
         }
     }
 
+    if(isset($_POST['botonCreaContrato'])){
+        $num_referencia = htmlentities($_POST['ref']);
+        $num_boletin = htmlentities($_POST['bol']);
+        //$socio
+        /*array(9) { ["ref"]=> string(1) "a" 
+        ["bol"]=> string(1) "a" 
+        ["soc"]=> string(25) "Selecciona el/los socio/s" 
+        ["corr"]=> string(26) "- Selecciona el corredor -" 
+        ["com"]=> string(27) "- Selecciona el comprador -" 
+        ["fecha_alta"]=> string(1) "a" 
+        ["fecha_fin"]=> string(1) "a" 
+        ["calidad"]=> string(4) "aovl" 
+        ["botonCreaContrato"]=> string(0) "" } */
+    }
     
 });
 
