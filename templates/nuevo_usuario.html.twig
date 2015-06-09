@@ -12,8 +12,94 @@
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="/nuevo_contrato">Nuevo usuario</a>
+                <a href="/nuevo_usuario">Nuevo usuario</a>
             </li>
         </ul>
+    </div>
+        <!-- END SAMPLE FORM PORTLET-->
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-user font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> NUEVO USUARIO</span>
+                </div>
+
+            </div>
+            <div class="portlet-body form">
+                <form role="form">
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_1" placeholder="Nombre de usuario" type="text" name="usuario" maxlength="16" required="required">
+                        <label for="form_control_1">Usuario</label>
+                        <span class="help-block">Nombre de usuario con el que entrará a la aplicación (max. 16 caracteres)</span>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_2" type="password" name="password" maxlength="16" required="required">
+                        <label for="form_control_2">Contraseña</label>
+                        <span class="help-block">Tu contraseña (max. 16 caracteres)</span>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_3" type="password" name="password2" maxlength="16" required="required">
+                        <label for="form_control_3">Repite contraseña</label>
+                        <span class="help-block">Repite contraseña</span>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_4" type="text" name="nombre" placeholder="Nombre completo" required="required">
+                        <label for="form_control_4">Nombre</label>
+                        <span class="help-block">Escribe tu nombre completo</span>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_5" type="text" name="apellidos" placeholder="Apellidos" required="required">
+                        <label for="form_control_5">Apellidos</label>
+                        <span class="help-block">Escribe tus apellidos</span>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_6" type="text" name="direccion" placeholder="Dirección" required="required">
+                        <label for="form_control_6">Dirección</label>
+                        <span class="help-block">Calle, avenida, piso...</span>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_7" type="text" name="localidad" placeholder="Localidad" required="required">
+                        <label for="form_control_7">Localidad</label>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_8" type="text" name="provincia" placeholder="Provincia" required="required">
+                        <label for="form_control_8">Provincia</label>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_9" type="text" name="cpostal" placeholder="Código postal" required="required">
+                        <label for="form_control_9">Código postal</label>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_10" type="text" name="telefono" placeholder="Nº de teléfono" maxlength="9">
+                        <label for="form_control_10">Teléfono</label>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_11" type="text" name="movil" placeholder="Nº de móvil" maxlength="9">
+                        <label for="form_control_11">Móvil</label>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_12" type="text" name="email" placeholder="Email">
+                        <label for="form_control_12">Email</label>
+                        <span class="help-block">Indica tu cuenta de correo principal</span>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_13" type="text" name="email2" placeholder="Email secundario">
+                        <label for="form_control_13">Email secundario</label>
+                        <span class="help-block">Indica tu cuenta de correo secundaria</span>
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                        <select class="form-control" id="form_control_14">
+                            <option>Socio</option>
+                            <option>Corredor</option>
+                            <option>Comprador</option>
+                            <option>Administrador</option>
+                        </select>
+                        <label for="form_control_1">Rol</label>
+									</div>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
     </div>
 {% endblock %}
