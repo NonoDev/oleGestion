@@ -78,6 +78,9 @@ $app->get('/listar_contrato', function() use ($app) {
 
 //Página nuevo usuario
 $app->get('/nuevo_usuario', function() use ($app) {
+    if(isset($_POST['enviar'])){
+        var_dump($_POST);
+    }
 
     $app->render('nuevo_usuario.html.twig');
 
@@ -111,6 +114,30 @@ $app->post('/', function() use ($app) {
         }else{
             $app->render('login.html.twig',array('errorLogin' => 'ok'));
         }
+    }
+        // REGISTRO USUARIOS
+    if(isset($_POST['enviar'])){
+        $registros = array();
+        $registros = $_POST;
+        array_pop($registros);
+        var_dump($registros);
+
+        $usuario = ORM::for_table('usuario')->create();
+
+        $usuario->nombre_usuario = $registros['usuario'];
+        $usuario->password = $registros['password'];
+        $usuario->nombre = $registros['nombre'];
+        $usuario->apellidos = $registros['apellidos'];
+        $usuario->direccion = $registros['direccion'];
+        $usuario->localidad = $registros['localidad'];
+        $usuario->provincia = $registros['provincia'];
+        $usuario->cod_postal = $registros['cpostal'];
+        $usuario->telefono = $registros['telefono'];
+        $usuario->movil = $registros['movil'];
+        $usuario->email = $registros['email'];
+        $usuario->email_secundario = $registros['email2'];
+        $usuario->rol = 'Corredor';
+        $usuario->save();
     }
 });
 
