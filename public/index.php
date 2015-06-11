@@ -78,9 +78,6 @@ $app->get('/listar_contrato', function() use ($app) {
 
 //Página nuevo usuario
 $app->get('/nuevo_usuario', function() use ($app) {
-    if(isset($_POST['enviar'])){
-        var_dump($_POST);
-    }
 
     $app->render('nuevo_usuario.html.twig');
 
@@ -187,6 +184,22 @@ $app->post('/', function() use ($app) {
             'mensajeOk' => $ok,
             'datos' => $registros
             ));
+    }
+
+    // ELIMINAR USUARIOS
+    if(isset($_POST['eliminar_user'])){
+        $user = ORM::for_table('usuario')
+            ->where('id',$_POST['eliminar_user'])
+            ->find_one();
+        $user->delete();
+        $user->save();
+        $usuarios = ORM::for_table('usuario')
+            ->find_many();
+        $app->render('listar_usuario.html.twig',array(
+            'mensajeError' => 'Fallo al eliminar el usuario',
+            'mensajeOk' => 'Usuario eliminado de forma correcta',
+            'usuarios' => $usuarios
+        ));
     }
 });
 
