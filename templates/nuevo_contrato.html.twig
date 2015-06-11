@@ -1,8 +1,8 @@
 {% extends 'menus.html.twig' %}
-{% block title %}Interoleo gestión | Nuevo usuario{% endblock %}
+{% block title %}Interoleo gestión | Nuevo contrato{% endblock %}
 {% block content %}
     <h3 class="page-title">
-        Nuevo usuario <small>Interoleo gestión</small>
+        Nuevo contrato <small>Interoleo gestión</small>
     </h3>
     <div class="page-bar">
         <ul class="page-breadcrumb">
@@ -12,7 +12,7 @@
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="/nuevo_usuario">Nuevo usuario</a>
+                <a href="/nuevo_contrato">Nuevo contrato</a>
             </li>
         </ul>
     </div>
@@ -29,7 +29,7 @@
             <div class="portlet-body form">
                 <form role="form" action="/" method="POST">
                     <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_1" placeholder="Referencia" type="text" name="ref" maxlength="45" required="required">
+                        <input class="form-control" id="form_control_1" type="text" name="ref" maxlength="45" required="required">
                         <label for="form_control_1">Referencia</label>
                         <span class="help-block">Número de referencia del contrato</span>
                     </div>
@@ -39,7 +39,7 @@
                         <span class="help-block">Boletín del contrato</span>
                     </div>                    
                     <div class="form-group form-md-line-input has-info">
-                        <select multiple class="form-control" name="cooperativa[]" id="cooperativa">
+                        <select multiple class="form-control" name="socios[]" id="cooperativa">
                             {% if socios %}
                                 {% for socio in socios %}
                                     <option value="{{ socio['id'] }}">{{ socio['nombre'] }}</option>
@@ -60,7 +60,7 @@
                         <label for="form_control_1">Corredor</label>
                     </div>
                     <div class="form-group form-md-line-input has-info">
-                        <select class="form-control" id="form_control_14" name="com">
+                        <select class="form-control" id="form_control_14" name="comp">
                             <option>- Selecciona el comprador -</option>
                             {% if compradores %}
                                 {% for comprador in compradores %}
@@ -70,16 +70,7 @@
                         </select>
                         <label for="form_control_1">Comprador</label>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_3" type="text" name="fecha_alta" placeholder="aa/mm/dd" required="required">
-                        <label for="form_control_3">Fecha de alta</label>
-                        <span class="help-block">Fecha en la que se da de alta el contrato</span>
-                    </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_4" type="date" name="fecha_fin" required="required" placeholder="aa/mm/dd">
-                        <label for="form_control_4">Fecha de fin de contrato</label>
-                        <span class="help-block">Fecha en la que el contrato se considerará cerrado</span>
-                    </div>
+
                     <div class="form-group form-md-line-input has-info">
                         <select class="form-control" id="form_control_14" name="calidad">
                             <option>- Selecciona la calidad -</option>

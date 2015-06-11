@@ -115,6 +115,7 @@ $app->get('/listar_usuario', function() use ($app) {
 // -------------------------------------- BOTONES ------------------------------------------------
 
 $app->post('/', function() use ($app) {
+    //Al pulsar el boton de login
     if(isset($_POST['username'])){        
         $nombreUser = htmlentities($_POST['username']);
         $passUser = htmlentities($_POST['password']);
@@ -139,20 +140,60 @@ $app->post('/', function() use ($app) {
             $app->render('login.html.twig',array('errorLogin' => 'ok'));
         }
     }
-
+    //Al pulsar el boton de crear nuevo contrato
     if(isset($_POST['botonCreaContrato'])){
         $num_referencia = htmlentities($_POST['ref']);
         $num_boletin = htmlentities($_POST['bol']);
-        //$socio
-        /*array(9) { ["ref"]=> string(1) "a" 
-        ["bol"]=> string(1) "a" 
-        ["soc"]=> string(25) "Selecciona el/los socio/s" 
-        ["corr"]=> string(26) "- Selecciona el corredor -" 
-        ["com"]=> string(27) "- Selecciona el comprador -" 
-        ["fecha_alta"]=> string(1) "a" 
-        ["fecha_fin"]=> string(1) "a" 
-        ["calidad"]=> string(4) "aovl" 
-        ["botonCreaContrato"]=> string(0) "" } */
+        $corredor = $_POST['corr'];
+        $comprador = $_POST['comp'];
+        $socios = $_POST['socios'];
+        $calidad = $_POST['calidad'];
+        $fecha_actual=date("Y-m-d H:i:s");
+
+        $compRef = ORM::for_table('contrato')
+            ->where('referencia',$num_referencia)
+            ->find_one();
+
+        $compBol = ORM::for_table('contrato')
+            ->where('boletin',$num_boletin)
+            ->find_one();
+
+        if($compRef || $compBol){
+            $soc = ORM::for_table('usuario')
+                ->where('rol','Socio')
+                ->find_many();
+            $corr = ORM::for_table('usuario')
+                ->where('rol','Corredor')
+                ->find_many();
+            $comp = ORM::for_table('usuario')
+                ->where('rol','Comprador')
+                ->find_many();
+            $app->render('nuevo_contrato.html.twig',array('errorContrato' => 'El número de referencia o el número de boletín ya existe','socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
+            die();
+        }else{
+            $nuevoContrato = ORM::for_table('contrato')->create();
+            $nuevoContrato->referencia = $num_referencia;
+            $nuevoContrato->boletin = $num_boletin;
+            $nuevoContrato->corredor_id = $corredor;
+            $nuevoContrato->comprador_id = $comprador;
+            $nuevoContrato->fecha_alta = $fecha_actual;
+            $nuevoContrato->calidad_AOV = $calidad;
+            $nuevoContrato->save();
+
+            $consIdCont = ORM::for_table('contrato')
+                ->select('id')
+                ->where('referencia',$num_referencia)
+                ->find_one();
+
+            foreach($socios as $socio){
+                $nuevoContratoSocios = ORM::for_table('usuario_contrato')->create();
+                $nuevoContratoSocios->usuario_id = $socio;
+                $nuevoContratoSocios->contrato_id = $consIdCont['id'];
+                $nuevoContratoSocios->save();
+            }
+
+            $app->render('inicio.html.twig',array('nuevoContrato' => 'Contrato añadido con éxito'));
+        }
     }
     
 });
