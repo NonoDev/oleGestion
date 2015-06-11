@@ -20,7 +20,7 @@
         <div class="portlet-title">
 
             <div class="caption">
-                <i class="fa fa-cogs"></i>Bordered Bootstrap 3.0 Responsive Table
+                <i class="fa fa-cogs"></i>Listado de usuarios
             </div>
             <div class="tools">
                 <a title="" data-original-title="" href="javascript:;" class="collapse">
@@ -108,6 +108,15 @@
             $(function() {
                 setTimeout(function() {
                     $.bootstrapGrowl("{{ mensajeOk }}", { type: 'success' });
+                }, 1000);
+            });
+        </script>
+    {% endif %}
+    {% if mensajeOkeditar %}
+        <script type="text/javascript">
+            $(function() {
+                setTimeout(function() {
+                    $.bootstrapGrowl("{{ mensajeOkeditar }}", { type: 'success' });
                 }, 1000);
             });
         </script>

@@ -114,6 +114,7 @@ $app->post('/', function() use ($app) {
     }
         // REGISTRO USUARIOS
     if(isset($_POST['enviar'])){
+
         $registros = array();
         $registros = $_POST;
         array_pop($registros);
@@ -144,37 +145,86 @@ $app->post('/', function() use ($app) {
         }else{
             $check = true;
         }
+        if($_POST['enviar']=="") {
+            if ($cons) {
+                $error = "Ya existe un usuario registrado con ese nombre";
+                $check = false;
+                $app->render('nuevo_usuario.html.twig', array(
+                    'mensajeError' => $error
+                ));
+                die();
 
-        if($cons){
-            $error = "Ya existe un usuario registrado con ese nombre";
-            $check = false;
-            $app->render('nuevo_usuario.html.twig',array(
-                'mensajeError' => $error
-            ));
-            die();
-        }else{
-            $check = true;
+            } else {
+                $check = true;
+            }
         }
-
         if($check){
-            $usuario = ORM::for_table('usuario')->create();
 
-            $usuario->nombre_usuario = $registros['usuario'];
-            $usuario->password = $registros['password'];
-            $usuario->nombre = $registros['nombre'];
-            $usuario->apellidos = $registros['apellidos'];
-            $usuario->direccion = $registros['direccion'];
-            $usuario->localidad = $registros['localidad'];
-            $usuario->provincia = $registros['provincia'];
-            $usuario->cod_postal = $registros['cpostal'];
-            $usuario->telefono = $registros['telefono'];
-            $usuario->movil = $registros['movil'];
-            $usuario->email = $registros['email'];
-            $usuario->email_secundario = $registros['email2'];
-            $usuario->rol = $_POST['rol'];
-            $usuario->save();
+            if($_POST['enviar']!=""){
+                $usuario = ORM::for_table('usuario')->find_one($_POST['enviar']);
+                $usuario->nombre_usuario = $registros['usuario'];
+                $usuario->password = $registros['password'];
+                $usuario->nombre = $registros['nombre'];
+                $usuario->apellidos = $registros['apellidos'];
+                $usuario->direccion = $registros['direccion'];
+                $usuario->localidad = $registros['localidad'];
+                $usuario->provincia = $registros['provincia'];
+                $usuario->cod_postal = $registros['cpostal'];
+                $usuario->telefono = $registros['telefono'];
+                $usuario->movil = $registros['movil'];
+                $usuario->email = $registros['email'];
+                $usuario->email_secundario = $registros['email2'];
+                $usuario->rol = $_POST['rol'];
+                $nuevo_usuario = ORM::for_table('usuario')->find_one($registros['usuario']);
+                if($registros['usuario'] != $nuevo_usuario){
+                    $comp = ORM::for_table('usuario')->find_one($nuevo_usuario);
+                    if ($comp) {
+                        $error = "Ya existe un usuario registrado con ese nombre";
+                        $check = false;
+                        $app->render('nuevo_usuario.html.twig',array(
+                            'nombre' => 'Editar',
+                            'usuario' => $usuario,
+                            'metodo' => 'editar'
+                        ));
+                        die();
 
-            $ok = "Usuario registrado correctamente";
+                    } else {
+                        $usuario->save();
+                        $ok = "Usuario modificado correctamente";
+                        $usuarios = ORM::for_table('usuario')
+                            ->find_many();
+                        $app->render('listar_usuario.html.twig',array(
+                            'mensajeOk' => $ok,
+                            'usuarios' => $usuarios
+                        ));
+                    }
+                }
+                $usuario->save();
+
+            }else{
+                $usuario = ORM::for_table('usuario')->create();
+                $usuario->nombre_usuario = $registros['usuario'];
+                $usuario->password = $registros['password'];
+                $usuario->nombre = $registros['nombre'];
+                $usuario->apellidos = $registros['apellidos'];
+                $usuario->direccion = $registros['direccion'];
+                $usuario->localidad = $registros['localidad'];
+                $usuario->provincia = $registros['provincia'];
+                $usuario->cod_postal = $registros['cpostal'];
+                $usuario->telefono = $registros['telefono'];
+                $usuario->movil = $registros['movil'];
+                $usuario->email = $registros['email'];
+                $usuario->email_secundario = $registros['email2'];
+                $usuario->rol = $_POST['rol'];
+                $usuario->save();
+
+                $ok = "Usuario creado correctamente";
+            }
+
+
+
+
+
 
         }else{
             $error = "Ha habido un fallo al registrar el usuario";
@@ -182,7 +232,6 @@ $app->post('/', function() use ($app) {
         $app->render('nuevo_usuario.html.twig',array(
             'mensajeError' => $error,
             'mensajeOk' => $ok,
-            'datos' => $registros
             ));
     }
 
@@ -199,6 +248,18 @@ $app->post('/', function() use ($app) {
             'mensajeError' => 'Fallo al eliminar el usuario',
             'mensajeOk' => 'Usuario eliminado de forma correcta',
             'usuarios' => $usuarios
+        ));
+    }
+
+    // EDITAR USUARIOS
+    if(isset($_POST['editar_user'])){
+        $user = ORM::for_table('usuario')
+            ->where('id',$_POST['editar_user'])
+            ->find_one();
+        $app->render('nuevo_usuario.html.twig',array(
+            'nombre' => 'Editar',
+            'usuario' => $user,
+            'metodo' => 'editar'
         ));
     }
 });
