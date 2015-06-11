@@ -120,24 +120,73 @@ $app->post('/', function() use ($app) {
         $registros = array();
         $registros = $_POST;
         array_pop($registros);
-        var_dump($registros);
+        $error = "";
+        $ok = "";
+        $check = false;
+        $cons = ORM::for_table('usuario')
+            ->where('nombre_usuario',$registros['usuario'])
+            ->find_one();
 
-        $usuario = ORM::for_table('usuario')->create();
+        if($registros['password'] != $registros['password2']){
+            $error = "Las contraseñas no coinciden";
+            $check = false;
+            $app->render('nuevo_usuario.html.twig',array(
+                'mensajeError' => $error
+            ));
+            die();
+        }else{
+            $check = true;
+        }
+        if($registros['email'] == $registros['email2']){
+            $error = "Los emails no pueden coincidir";
+            $check = false;
+            $app->render('nuevo_usuario.html.twig',array(
+                'mensajeError' => $error
+            ));
+            die();
+        }else{
+            $check = true;
+        }
 
-        $usuario->nombre_usuario = $registros['usuario'];
-        $usuario->password = $registros['password'];
-        $usuario->nombre = $registros['nombre'];
-        $usuario->apellidos = $registros['apellidos'];
-        $usuario->direccion = $registros['direccion'];
-        $usuario->localidad = $registros['localidad'];
-        $usuario->provincia = $registros['provincia'];
-        $usuario->cod_postal = $registros['cpostal'];
-        $usuario->telefono = $registros['telefono'];
-        $usuario->movil = $registros['movil'];
-        $usuario->email = $registros['email'];
-        $usuario->email_secundario = $registros['email2'];
-        $usuario->rol = 'Corredor';
-        $usuario->save();
+        if($cons){
+            $error = "Ya existe un usuario registrado con ese nombre";
+            $check = false;
+            $app->render('nuevo_usuario.html.twig',array(
+                'mensajeError' => $error
+            ));
+            die();
+        }else{
+            $check = true;
+        }
+
+        if($check){
+            $usuario = ORM::for_table('usuario')->create();
+
+            $usuario->nombre_usuario = $registros['usuario'];
+            $usuario->password = $registros['password'];
+            $usuario->nombre = $registros['nombre'];
+            $usuario->apellidos = $registros['apellidos'];
+            $usuario->direccion = $registros['direccion'];
+            $usuario->localidad = $registros['localidad'];
+            $usuario->provincia = $registros['provincia'];
+            $usuario->cod_postal = $registros['cpostal'];
+            $usuario->telefono = $registros['telefono'];
+            $usuario->movil = $registros['movil'];
+            $usuario->email = $registros['email'];
+            $usuario->email_secundario = $registros['email2'];
+            $usuario->rol = $_POST['rol'];
+            $usuario->save();
+
+            $ok = "Usuario registrado correctamente";
+
+        }else{
+            $error = "Ha habido un fallo al registrar el usuario";
+        }
+        $app->render('nuevo_usuario.html.twig',array(
+            'mensajeError' => $error,
+            'mensajeOk' => $ok,
+            'datos' => $registros
+            ));
     }
 });
 

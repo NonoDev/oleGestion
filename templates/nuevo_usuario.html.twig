@@ -79,21 +79,21 @@
                         <label for="form_control_11">Móvil</label>
                     </div>
                     <div class="form-group form-md-line-input col-md-6">
-                        <input class="form-control" id="form_control_12" type="text" name="email" placeholder="Email" required="required">
+                        <input class="form-control" id="form_control_12" type="email" name="email" placeholder="Email" required="required">
                         <label for="form_control_12">Email</label>
                         <span class="help-block">Indica tu cuenta de correo principal</span>
                     </div>
                     <div class="form-group form-md-line-input col-md-6">
-                        <input class="form-control" id="form_control_13" type="text" name="email2" placeholder="Email secundario" required="required">
+                        <input class="form-control" id="form_control_13" type="email" name="email2" placeholder="Email secundario" required="required">
                         <label for="form_control_13">Email secundario</label>
                         <span class="help-block">Indica tu cuenta de correo secundaria</span>
                     </div>
                     <div class="form-group form-md-line-input has-info col-md-6">
-                        <select class="form-control" id="form_control_14">
-                            <option>Socio</option>
-                            <option>Corredor</option>
-                            <option>Comprador</option>
-                            <option>Administrador</option>
+                        <select class="form-control" id="form_control_14" name="rol">
+                            <option value="Socio">Socio</option>
+                            <option value="Corredor">Corredor</option>
+                            <option value="Comprador">Comprador</option>
+                            <option value="Administrador">Administrador</option>
                         </select>
                         <label for="form_control_1">Rol</label>
                     </div>
@@ -106,4 +106,24 @@
         </div>
         <!-- END SAMPLE FORM PORTLET-->
     </div>
+{% endblock %}
+{% block scripts %}
+    {% if mensajeError %}
+        <script type="text/javascript">
+            $(function() {
+                setTimeout(function() {
+                    $.bootstrapGrowl("{{ mensajeError }}", { type: 'danger' });
+                }, 1000);
+            });
+        </script>
+    {% endif %}
+    {% if mensajeOk %}
+        <script type="text/javascript">
+            $(function() {
+                setTimeout(function() {
+                    $.bootstrapGrowl("{{ mensajeOk }}", { type: 'success' });
+                }, 1000);
+            });
+        </script>
+    {% endif %}
 {% endblock %}
