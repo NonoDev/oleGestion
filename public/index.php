@@ -314,6 +314,10 @@ $app->post('/', function() use ($app) {
         $calidad = $_POST['calidad'];
         $fecha_actual = date("Y-m-d H:i:s");
 
+        ORM::for_table('usuario_contrato')
+            ->where('contrato_id',$_POST['botonEditaContrato'])
+            ->delete_many();
+
         $nuevoContrato = ORM::for_table('contrato')->find_one($_POST['botonEditaContrato']);
         $nuevoContrato->referencia = $num_referencia;
         $nuevoContrato->boletin = $num_boletin;
@@ -322,6 +326,14 @@ $app->post('/', function() use ($app) {
         $nuevoContrato->fecha_alta = $fecha_actual;
         $nuevoContrato->calidad_AOV = $calidad;
         $nuevoContrato->save();
+
+
+        foreach($socios as $socio){
+            $nuevoContratoSocios = ORM::for_table('usuario_contrato')->create();
+            $nuevoContratoSocios->usuario_id = $socio;
+            $nuevoContratoSocios->contrato_id = $_POST['botonEditaContrato'];
+            $nuevoContratoSocios->save();
+        }
 
         $cons = ORM::for_table('contrato')
             ->join('usuario', array('contrato.corredor_id', '=', 'us1.id'), 'us1')

@@ -39,7 +39,7 @@
                         <span class="help-block">Boletín del contrato</span>
                     </div>                    
                     <div class="form-group form-md-line-input has-info">
-                        <select multiple class="form-control" name="socios[]" id="cooperativa">
+                        <select multiple class="form-control" name="socios[]" id="cooperativa" required>
                             {% if socios %}
                                 {% for socio in socios %}
                                     <option value="{{ socio['id'] }}"
@@ -56,7 +56,6 @@
                     </div>
                     <div class="form-group form-md-line-input has-info">
                         <select class="form-control" id="form_control_14" name="corr">
-                            <option>- Selecciona el corredor -</option>
                             {% if corredores %}
                                 {% for corredor in corredores %}
                                     <option value="{{ corredor['id'] }}"
@@ -71,7 +70,6 @@
                     </div>
                     <div class="form-group form-md-line-input has-info">
                         <select class="form-control" id="form_control_14" name="comp">
-                            <option>- Selecciona el comprador -</option>
                             {% if compradores %}
                                 {% for comprador in compradores %}
                                     <option value="{{ comprador['id'] }}"
@@ -87,7 +85,6 @@
 
                     <div class="form-group form-md-line-input has-info">
                         <select class="form-control" id="form_control_14" name="calidad">
-                            <option>- Selecciona la calidad -</option>
                             <option value="aovl" {% if datosCont['calidad_aov']=='AOVL' %}selected{% endif %}>AOVL</option>
                             <option value="aove" {% if datosCont['calidad_aov']=='AOVE' %}selected{% endif %}>AOVE</option>
                             <option value="aov" {% if datosCont['calidad_aov']=='AOV' %}selected{% endif %}>AOV</option>
