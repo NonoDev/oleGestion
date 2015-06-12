@@ -1,8 +1,6 @@
 <?php
-
 include "../vendor/autoload.php";
 require_once "../config.php";
-
 $app = new \Slim\Slim(
     array(
         'view' => new \Slim\Views\Twig(),
@@ -10,7 +8,6 @@ $app = new \Slim\Slim(
         'debug' => true
     )
 );
-
 $view = $app->view();
 $view->parserOptions = array(
     'charset' => 'utf-8',
@@ -19,19 +16,13 @@ $view->parserOptions = array(
     'strict_variables' => false,
     'autoescape' => true
 );
-
 # Add extensions.
-
 $view->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
     new \Twig_Extension_Debug()
 );
-
 session_cache_limiter(false);
 session_start();
-
-
-
 //Página de inicio de la aplicación
 $app->get('/', function() use ($app) {
     if(isset($_SESSION['usuarioLogin'])){
@@ -39,64 +30,45 @@ $app->get('/', function() use ($app) {
     }else {
         $app->render('login.html.twig');
     }
-
 })->name('inicio');
-
-
 $app->get('/logout', function() use ($app) {
     session_destroy();
     $app->redirect($app->router()->urlFor('inicio'));
 });
-
 //Página nuevas notificaciones
 $app->get('/nueva_notificacion', function() use ($app) {
-
     $app->render('nueva_notificacion.html.twig');
-
 })->name('nueva_notificacion');
-
 //Página listar notificaciones
 $app->get('/listar_notificacion', function() use ($app) {
 
-    $app->render('listar_notificacion.html.twig');
-
+    $notificaciones = ORM::for_table('notificacion')
+        ->find_many();
+    $app->render('listar_notificacion.html.twig', [
+        'notificaciones' => $notificaciones
+    ]);
 })->name('listar_notificacion');
-
 //Página nuevo contrato
 $app->get('/nuevo_contrato', function() use ($app) {
-
     $app->render('nuevo_contrato.html.twig');
-
 })->name('nuevo_contrato');
-
 //Página listar contratos
 $app->get('/listar_contrato', function() use ($app) {
-
     $app->render('listar_contrato.html.twig');
-
 })->name('listar_contrato');
-
 //Página nuevo usuario
 $app->get('/nuevo_usuario', function() use ($app) {
-
     $app->render('nuevo_usuario.html.twig');
-
 })->name('nuevo_usuario');
-
 //Página listar usuarios
 $app->get('/listar_usuario', function() use ($app) {
-
     $usuarios = ORM::for_table('usuario')
         ->find_many();
-
     $app->render('listar_usuario.html.twig', [
         'usuarios' => $usuarios
     ]);
-
 })->name('listar_usuario');
-
 // -------------------------------------- BOTONES ------------------------------------------------
-
 $app->post('/', function() use ($app) {
     if(isset($_POST['botonLogin'])){
         $nombreUser = htmlentities($_POST['username']);
@@ -112,9 +84,8 @@ $app->post('/', function() use ($app) {
             $app->render('login.html.twig',array('errorLogin' => 'ok'));
         }
     }
-        // REGISTRO USUARIOS
+    // REGISTRO USUARIOS
     if(isset($_POST['enviar'])){
-
         $registros = array();
         $registros = $_POST;
         array_pop($registros);
@@ -124,7 +95,6 @@ $app->post('/', function() use ($app) {
         $cons = ORM::for_table('usuario')
             ->where('nombre_usuario',$registros['usuario'])
             ->find_one();
-
         if($registros['password'] != $registros['password2']){
             $error = "Las contraseñas no coinciden";
             $check = false;
@@ -153,13 +123,11 @@ $app->post('/', function() use ($app) {
                     'mensajeError' => $error
                 ));
                 die();
-
             } else {
                 $check = true;
             }
         }
         if($check){
-
             if($_POST['enviar']!=""){
                 $usuario = ORM::for_table('usuario')->find_one($_POST['enviar']);
                 $usuario->nombre_usuario = $registros['usuario'];
@@ -187,7 +155,6 @@ $app->post('/', function() use ($app) {
                             'metodo' => 'editar'
                         ));
                         die();
-
                     } else {
                         $usuario->save();
                         $ok = "Usuario modificado correctamente";
@@ -200,7 +167,6 @@ $app->post('/', function() use ($app) {
                     }
                 }
                 $usuario->save();
-
             }else{
                 $usuario = ORM::for_table('usuario')->create();
                 $usuario->nombre_usuario = $registros['usuario'];
@@ -217,24 +183,16 @@ $app->post('/', function() use ($app) {
                 $usuario->email_secundario = $registros['email2'];
                 $usuario->rol = $_POST['rol'];
                 $usuario->save();
-
                 $ok = "Usuario creado correctamente";
             }
-
-
-
-
-
-
         }else{
             $error = "Ha habido un fallo al registrar el usuario";
         }
         $app->render('nuevo_usuario.html.twig',array(
             'mensajeError' => $error,
             'mensajeOk' => $ok,
-            ));
+        ));
     }
-
     // ELIMINAR USUARIOS
     if(isset($_POST['eliminar_user'])){
         $user = ORM::for_table('usuario')
@@ -250,7 +208,6 @@ $app->post('/', function() use ($app) {
             'usuarios' => $usuarios
         ));
     }
-
     // EDITAR USUARIOS
     if(isset($_POST['editar_user'])){
         $user = ORM::for_table('usuario')
@@ -263,5 +220,4 @@ $app->post('/', function() use ($app) {
         ));
     }
 });
-
 $app->run();
