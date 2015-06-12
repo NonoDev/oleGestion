@@ -88,8 +88,47 @@ $app->get('/nuevo_contrato', function() use ($app) {
 
 //Página listar contratos
 $app->get('/listar_contrato', function() use ($app) {
+    $cons = ORM::for_table('contrato')
+        ->join('usuario', array('contrato.corredor_id', '=', 'us1.id'),'us1')
+        ->join('usuario', array('contrato.comprador_id', '=', 'us2.id'),'us2')
+        ->select('contrato.id','contrato_id')
+        ->select('contrato.referencia')
+        ->select('contrato.fecha_alta')
+        ->select('contrato.boletin')
+        ->select('contrato.calidad_aov')
+        ->select('us1.nombre_usuario','corredor_nombreUser')
+        ->select('us1.nombre','corredor_nombre')
+        ->select('us1.apellidos','corredor_apellidos')
+        ->select('us2.nombre_usuario','comprador_nombreUser')
+        ->select('us2.nombre','comprador_nombre')
+        ->select('us2.apellidos','comprador_apellidos')
+        ->order_by_desc('contrato.id')
+        ->find_many();
+    $miArray = [];
+    $i = 0;
+    foreach($cons as $item){
+        $socios = ORM::for_table('usuario_contrato')
+            ->join('contrato', array('usuario_contrato.contrato_id', '=', 'contrato.id'))
+            ->join('usuario', array('usuario_contrato.usuario_id', '=', 'usuario.id'))
+            ->where('usuario_contrato.contrato_id',$item['contrato_id'])
+            ->select('usuario.nombre')
+            ->find_many();
 
-    $app->render('listar_contrato.html.twig');
+        $miArray[$i]['id'] = $item['contrato_id'];
+        $miArray[$i]['referencia'] = $item['referencia'];
+        $miArray[$i]['boletin'] = $item['boletin'];
+        $miArray[$i]['fecha_alta'] = $item['fecha_alta'];
+        $miArray[$i]['calidad_aov'] = $item['calidad_aov'];
+        $miArray[$i]['corredor_nombreUser'] = $item['corredor_nombreUser'];
+        $miArray[$i]['corredor_nombre'] = $item['corredor_nombre'];
+        $miArray[$i]['corredor_apellidos'] = $item['corredor_apellidos'];
+        $miArray[$i]['comprador_nombreUser'] = $item['comprador_nombreUser'];
+        $miArray[$i]['comprador_nombre'] = $item['comprador_nombre'];
+        $miArray[$i]['comprador_apellidos'] = $item['comprador_apellidos'];
+        $miArray[$i]['socios'] = $socios;
+        $i++;
+    }
+    $app->render('listar_contrato.html.twig',array('datosCont' => $miArray));
 
 })->name('listar_contrato');
 
@@ -195,7 +234,138 @@ $app->post('/', function() use ($app) {
             $app->render('inicio.html.twig',array('nuevoContrato' => 'Contrato añadido con éxito'));
         }
     }
-    
+
+    if(isset($_POST['eliminarContrato'])){
+        ORM::for_table('usuario_contrato')
+            ->where('contrato_id',$_POST['eliminarContrato'])
+            ->delete_many();
+        ORM::for_table('contrato')
+            ->find_one($_POST['eliminarContrato'])
+            ->delete();
+
+        $cons = ORM::for_table('contrato')
+            ->join('usuario', array('contrato.corredor_id', '=', 'us1.id'),'us1')
+            ->join('usuario', array('contrato.comprador_id', '=', 'us2.id'),'us2')
+            ->select('contrato.id','contrato_id')
+            ->select('contrato.referencia')
+            ->select('contrato.fecha_alta')
+            ->select('contrato.boletin')
+            ->select('contrato.calidad_aov')
+            ->select('us1.nombre_usuario','corredor_nombreUser')
+            ->select('us1.nombre','corredor_nombre')
+            ->select('us1.apellidos','corredor_apellidos')
+            ->select('us2.nombre_usuario','comprador_nombreUser')
+            ->select('us2.nombre','comprador_nombre')
+            ->select('us2.apellidos','comprador_apellidos')
+            ->order_by_desc('contrato.id')
+            ->find_many();
+        $miArray = [];
+        $i = 0;
+        foreach($cons as $item){
+            $socios = ORM::for_table('usuario_contrato')
+                ->join('contrato', array('usuario_contrato.contrato_id', '=', 'contrato.id'))
+                ->join('usuario', array('usuario_contrato.usuario_id', '=', 'usuario.id'))
+                ->where('usuario_contrato.contrato_id',$item['contrato_id'])
+                ->select('usuario.nombre')
+                ->find_many();
+
+            $miArray[$i]['id'] = $item['contrato_id'];
+            $miArray[$i]['referencia'] = $item['referencia'];
+            $miArray[$i]['boletin'] = $item['boletin'];
+            $miArray[$i]['fecha_alta'] = $item['fecha_alta'];
+            $miArray[$i]['calidad_aov'] = $item['calidad_aov'];
+            $miArray[$i]['corredor_nombreUser'] = $item['corredor_nombreUser'];
+            $miArray[$i]['corredor_nombre'] = $item['corredor_nombre'];
+            $miArray[$i]['corredor_apellidos'] = $item['corredor_apellidos'];
+            $miArray[$i]['comprador_nombreUser'] = $item['comprador_nombreUser'];
+            $miArray[$i]['comprador_nombre'] = $item['comprador_nombre'];
+            $miArray[$i]['comprador_apellidos'] = $item['comprador_apellidos'];
+            $miArray[$i]['socios'] = $socios;
+            $i++;
+        }
+        $app->render('listar_contrato.html.twig',array('datosCont' => $miArray,'errorContrato' => 'Contrato eliminado con éxito'));
+    }
+    if(isset($_POST['editarContrato'])){
+        $cons = ORM::for_table('contrato')
+            ->where('id',$_POST['editarContrato'])
+            ->find_one();
+        $sociosSelecc = ORM::for_table('usuario_contrato')
+            ->where('contrato_id',$_POST['editarContrato'])
+            ->find_many();
+        $soc = ORM::for_table('usuario')
+            ->where('rol','Socio')
+            ->find_many();
+        $corr = ORM::for_table('usuario')
+            ->where('rol','Corredor')
+            ->find_many();
+        $comp = ORM::for_table('usuario')
+            ->where('rol','Comprador')
+            ->find_many();
+
+        $app->render('nuevo_contrato.html.twig',array('datosCont' => $cons,'sociosSelecc' => $sociosSelecc,'socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
+    }
+
+    if(isset($_POST['botonEditaContrato'])) {
+        $num_referencia = htmlentities($_POST['ref']);
+        $num_boletin = htmlentities($_POST['bol']);
+        $corredor = $_POST['corr'];
+        $comprador = $_POST['comp'];
+        $socios = $_POST['socios'];
+        $calidad = $_POST['calidad'];
+        $fecha_actual = date("Y-m-d H:i:s");
+
+        $nuevoContrato = ORM::for_table('contrato')->find_one($_POST['botonEditaContrato']);
+        $nuevoContrato->referencia = $num_referencia;
+        $nuevoContrato->boletin = $num_boletin;
+        $nuevoContrato->corredor_id = $corredor;
+        $nuevoContrato->comprador_id = $comprador;
+        $nuevoContrato->fecha_alta = $fecha_actual;
+        $nuevoContrato->calidad_AOV = $calidad;
+        $nuevoContrato->save();
+
+        $cons = ORM::for_table('contrato')
+            ->join('usuario', array('contrato.corredor_id', '=', 'us1.id'), 'us1')
+            ->join('usuario', array('contrato.comprador_id', '=', 'us2.id'), 'us2')
+            ->select('contrato.id', 'contrato_id')
+            ->select('contrato.referencia')
+            ->select('contrato.fecha_alta')
+            ->select('contrato.boletin')
+            ->select('contrato.calidad_aov')
+            ->select('us1.nombre_usuario', 'corredor_nombreUser')
+            ->select('us1.nombre', 'corredor_nombre')
+            ->select('us1.apellidos', 'corredor_apellidos')
+            ->select('us2.nombre_usuario', 'comprador_nombreUser')
+            ->select('us2.nombre', 'comprador_nombre')
+            ->select('us2.apellidos', 'comprador_apellidos')
+            ->order_by_desc('contrato.id')
+            ->find_many();
+        $miArray = [];
+        $i = 0;
+        foreach ($cons as $item) {
+            $socios = ORM::for_table('usuario_contrato')
+                ->join('contrato', array('usuario_contrato.contrato_id', '=', 'contrato.id'))
+                ->join('usuario', array('usuario_contrato.usuario_id', '=', 'usuario.id'))
+                ->where('usuario_contrato.contrato_id', $item['contrato_id'])
+                ->select('usuario.nombre')
+                ->find_many();
+
+            $miArray[$i]['id'] = $item['contrato_id'];
+            $miArray[$i]['referencia'] = $item['referencia'];
+            $miArray[$i]['boletin'] = $item['boletin'];
+            $miArray[$i]['fecha_alta'] = $item['fecha_alta'];
+            $miArray[$i]['calidad_aov'] = $item['calidad_aov'];
+            $miArray[$i]['corredor_nombreUser'] = $item['corredor_nombreUser'];
+            $miArray[$i]['corredor_nombre'] = $item['corredor_nombre'];
+            $miArray[$i]['corredor_apellidos'] = $item['corredor_apellidos'];
+            $miArray[$i]['comprador_nombreUser'] = $item['comprador_nombreUser'];
+            $miArray[$i]['comprador_nombre'] = $item['comprador_nombre'];
+            $miArray[$i]['comprador_apellidos'] = $item['comprador_apellidos'];
+            $miArray[$i]['socios'] = $socios;
+            $i++;
+        }
+        $app->render('listar_contrato.html.twig', array('datosCont' => $miArray, 'nuevoContrato' => 'Contrato modificado con éxito'));
+    }
+
 });
 
 $app->run();
