@@ -219,5 +219,21 @@ $app->post('/', function() use ($app) {
             'metodo' => 'editar'
         ));
     }
+
+    // ELIMINAR NOTIFICACIONES
+    if(isset($_POST['eliminar_noti'])){
+        $noti = ORM::for_table('notificacion')
+            ->where('id',$_POST['eliminar_noti'])
+            ->find_one();
+        $noti->delete();
+        $noti->save();
+        $notificaciones = ORM::for_table('notificacion')
+            ->find_many();
+        $app->render('listar_notificacion.html.twig',array(
+            'mensajeError' => 'Fallo al eliminar la notificación',
+            'mensajeOk' => 'Notificación eliminada de forma correcta',
+            'notificaciones'=> $notificaciones
+        ));
+    }
 });
 $app->run();
