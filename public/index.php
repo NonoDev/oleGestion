@@ -48,18 +48,22 @@ $app->get('/logout', function() use ($app) {
 });
 
 //Página para las nuevas notificaciones
-$app->get('/nueva_notificacion', function() use ($app) {
+/*$app->get('/nueva_notificacion', function() use ($app) {
     if(isset($_SESSION['usuarioLogin'])){
         $app->render('inicio.html.twig');
     }else {
         $app->render('login.html.twig');
     }
-});
+});*/
 
 //Página nuevas notificaciones
 $app->get('/nueva_notificacion', function() use ($app) {
+    $contratos = ORM::for_table('contrato')
+        ->find_many();
 
-    $app->render('nueva_notificacion.html.twig');
+
+
+    $app->render('nueva_notificacion.html.twig',array('contratos' => $contratos));
 
 })->name('nueva_notificacion');
 
@@ -81,9 +85,8 @@ $app->get('/nuevo_contrato', function() use ($app) {
     $comp = ORM::for_table('usuario')
     ->where('rol','Comprador')
     ->find_many();
-
     $app->render('nuevo_contrato.html.twig',array('socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
-
+    die();
 })->name('nuevo_contrato');
 
 //Página listar contratos
@@ -131,6 +134,8 @@ $app->get('/listar_contrato', function() use ($app) {
     $app->render('listar_contrato.html.twig',array('datosCont' => $miArray));
 
 })->name('listar_contrato');
+
+
 
 //Página nuevo usuario
 $app->get('/nuevo_usuario', function() use ($app) {
@@ -207,7 +212,7 @@ $app->post('/', function() use ($app) {
             $comp = ORM::for_table('usuario')
                 ->where('rol','Comprador')
                 ->find_many();
-            $app->render('nuevo_contrato.html.twig',array('errorContrato' => 'El número de referencia o el número de boletín ya existe','socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
+            $app->render('nuevo_contrato.html.twig',array('mensajeError' => 'El número de referencia o el número de boletín ya existe','socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
             die();
         }else{
             $nuevoContrato = ORM::for_table('contrato')->create();
@@ -231,10 +236,11 @@ $app->post('/', function() use ($app) {
                 $nuevoContratoSocios->save();
             }
 
-            $app->render('inicio.html.twig',array('nuevoContrato' => 'Contrato añadido con éxito'));
+            $app->render('inicio.html.twig',array('mensajeOk' => 'Contrato añadido con éxito'));
         }
     }
 
+    //Al pulsar para eliminar el contrato deseado
     if(isset($_POST['eliminarContrato'])){
         ORM::for_table('usuario_contrato')
             ->where('contrato_id',$_POST['eliminarContrato'])
@@ -283,8 +289,10 @@ $app->post('/', function() use ($app) {
             $miArray[$i]['socios'] = $socios;
             $i++;
         }
-        $app->render('listar_contrato.html.twig',array('datosCont' => $miArray,'errorContrato' => 'Contrato eliminado con éxito'));
+        $app->render('listar_contrato.html.twig',array('datosCont' => $miArray,'mensajeError' => 'Contrato eliminado con éxito'));
     }
+
+    //Al pulsar para editar el contrato deseado. LLevará a una sección que nos permitirá hacer cambios
     if(isset($_POST['editarContrato'])){
         $cons = ORM::for_table('contrato')
             ->where('id',$_POST['editarContrato'])
@@ -305,6 +313,7 @@ $app->post('/', function() use ($app) {
         $app->render('nuevo_contrato.html.twig',array('datosCont' => $cons,'sociosSelecc' => $sociosSelecc,'socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
     }
 
+    //Al pulsar el boton editar una vez hemos hecho los cambios en el contrato
     if(isset($_POST['botonEditaContrato'])) {
         $num_referencia = htmlentities($_POST['ref']);
         $num_boletin = htmlentities($_POST['bol']);
@@ -375,7 +384,150 @@ $app->post('/', function() use ($app) {
             $miArray[$i]['socios'] = $socios;
             $i++;
         }
-        $app->render('listar_contrato.html.twig', array('datosCont' => $miArray, 'nuevoContrato' => 'Contrato modificado con éxito'));
+        $app->render('listar_contrato.html.twig', array('datosCont' => $miArray, 'mensajeOk' => 'Contrato modificado con éxito'));
+    }
+
+    // Al pulsarl el botón CONFIRMAR en el formulario de registro del usuario
+    if(isset($_POST['enviar'])){
+        $registros = array();
+        $registros = $_POST;
+        array_pop($registros);
+        $error = "";
+        $ok = "";
+        $check = false;
+        $cons = ORM::for_table('usuario')
+            ->where('nombre_usuario',$registros['usuario'])
+            ->find_one();
+        if($registros['password'] != $registros['password2']){
+            $error = "Las contraseñas no coinciden";
+            $check = false;
+            $app->render('nuevo_usuario.html.twig',array(
+                'mensajeError' => $error
+            ));
+            die();
+        }else{
+            $check = true;
+        }
+        if($registros['email'] == $registros['email2']){
+            $error = "Los emails no pueden coincidir";
+            $check = false;
+            $app->render('nuevo_usuario.html.twig',array(
+                'mensajeError' => $error
+            ));
+            die();
+        }else{
+            $check = true;
+        }
+        if($_POST['enviar']=="") {
+            if ($cons) {
+                $error = "Ya existe un usuario registrado con ese nombre";
+                $check = false;
+                $app->render('nuevo_usuario.html.twig', array(
+                    'mensajeError' => $error
+                ));
+                die();
+            } else {
+                $check = true;
+            }
+        }
+        if($check){
+            if($_POST['enviar']!=""){
+                $usuario = ORM::for_table('usuario')->find_one($_POST['enviar']);
+                $usuario->nombre_usuario = $registros['usuario'];
+                $usuario->password = $registros['password'];
+                $usuario->nombre = $registros['nombre'];
+                $usuario->apellidos = $registros['apellidos'];
+                $usuario->direccion = $registros['direccion'];
+                $usuario->localidad = $registros['localidad'];
+                $usuario->provincia = $registros['provincia'];
+                $usuario->cod_postal = $registros['cpostal'];
+                $usuario->telefono = $registros['telefono'];
+                $usuario->movil = $registros['movil'];
+                $usuario->email = $registros['email'];
+                $usuario->email_secundario = $registros['email2'];
+                $usuario->rol = $_POST['rol'];
+                $nuevo_usuario = ORM::for_table('usuario')->find_one($registros['usuario']);
+                if($registros['usuario'] != $nuevo_usuario){
+                    $comp = ORM::for_table('usuario')->find_one($nuevo_usuario);
+                    if ($comp) {
+                        $error = "Ya existe un usuario registrado con ese nombre";
+                        $check = false;
+                        $app->render('nuevo_usuario.html.twig',array(
+                            'nombre' => 'Editar',
+                            'usuario' => $usuario,
+                            'metodo' => 'editar'
+                        ));
+                        die();
+                    } else {
+                        $usuario->save();
+                        $ok = "Usuario modificado correctamente";
+                        $usuarios = ORM::for_table('usuario')
+                            ->find_many();
+                        $app->render('listar_usuario.html.twig',array(
+                            'mensajeOk' => $ok,
+                            'usuarios' => $usuarios
+                        ));
+                        die();
+                    }
+                }
+                $usuario->save();
+            }else{
+                $usuario = ORM::for_table('usuario')->create();
+                $usuario->nombre_usuario = $registros['usuario'];
+                $usuario->password = $registros['password'];
+                $usuario->nombre = $registros['nombre'];
+                $usuario->apellidos = $registros['apellidos'];
+                $usuario->direccion = $registros['direccion'];
+                $usuario->localidad = $registros['localidad'];
+                $usuario->provincia = $registros['provincia'];
+                $usuario->cod_postal = $registros['cpostal'];
+                $usuario->telefono = $registros['telefono'];
+                $usuario->movil = $registros['movil'];
+                $usuario->email = $registros['email'];
+                $usuario->email_secundario = $registros['email2'];
+                $usuario->rol = $_POST['rol'];
+                $usuario->save();
+                $ok = "Usuario creado correctamente";
+            }
+        }else{
+            $error = "Ha habido un fallo al registrar el usuario";
+        }
+        $app->render('nuevo_usuario.html.twig',array(
+            'mensajeError' => $error,
+            'mensajeOk' => $ok,
+        ));
+        die();
+    }
+    // Al pulsar el boton eliminar de la lista de usuarios
+    if(isset($_POST['eliminar_user'])){
+        $user = ORM::for_table('usuario')
+            ->where('id',$_POST['eliminar_user'])
+            ->find_one();
+        $user->delete();
+        $user->save();
+        $usuarios = ORM::for_table('usuario')
+            ->find_many();
+        $app->render('listar_usuario.html.twig',array(
+            'mensajeOk' => 'Usuario eliminado de forma correcta',
+            'usuarios' => $usuarios
+        ));
+        die();
+    }
+    // Al pusar el botón editar de la lista de usuarios
+    if(isset($_POST['editar_user'])){
+        $user = ORM::for_table('usuario')
+            ->where('id',$_POST['editar_user'])
+            ->find_one();
+        $app->render('nuevo_usuario.html.twig',array(
+            'nombre' => 'Editar',
+            'usuario' => $user,
+            'metodo' => 'editar'
+        ));
+        die();
+    }
+
+    if(isset($_POST['botonCreaNotificacion'])){
+        echo "VA";die();
     }
 
 });

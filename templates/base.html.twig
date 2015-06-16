@@ -132,22 +132,21 @@ License: You must have a valid license purchased only from themeforest(the above
                 Tasks.initDashboardWidget();
             });
         </script>
-        {% if nuevoContrato %}
+        {% if mensajeOk %}
         <script type="text/javascript">
             $(function() {
                 setTimeout(function() {
-                    $.bootstrapGrowl("{{ nuevoContrato }}", { type: 'success' });
+                    $.bootstrapGrowl("{{ mensajeOk }}", { type: 'success' });
                 }, 1000);
             });
         </script>
         {% endif %}
-        {% if errorContrato %}
+        {% if mensajeError %}
             <script type="text/javascript">
                 $(function() {
                     setTimeout(function() {
-                        $.bootstrapGrowl("{{ errorContrato }}", { type: 'danger' });
-
-                    }, 500);
+                        $.bootstrapGrowl("{{ mensajeError }}", { type: 'danger' });
+                    }, 1000);
                 });
             </script>
         {% endif %}

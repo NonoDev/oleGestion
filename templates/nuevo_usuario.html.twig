@@ -2,7 +2,7 @@
 {% block title %}Interoleo gestión | Nuevo usuario{% endblock %}
 {% block content %}
     <h3 class="page-title">
-        Nuevo usuario <small>Interoleo gestión</small>
+        {% if nombre %}{{ nombre }} usuario{% else %}Nuevo usuario{% endif %} <small>Interoleo gestión</small>
     </h3>
     <div class="page-bar">
         <ul class="page-breadcrumb">
@@ -12,7 +12,7 @@
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="/nuevo_usuario">Nuevo usuario</a>
+                <a href="/nuevo_usuario">{% if nombre %}{{ nombre }} usuario{% else %}Nuevo usuario{% endif %}</a>
             </li>
         </ul>
     </div>
@@ -26,80 +26,104 @@
                 </div>
 
             </div>
-            <div class="portlet-body form">
-                <form role="form">
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_1" placeholder="Nombre de usuario" type="text" name="usuario" maxlength="16" required="required">
+            <div class="portlet-body form row">
+                <form role="form" action="/" method="post">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_1" {% if usuario %}value="{{ usuario.nombre_usuario }}"{% endif %} placeholder="Nombre de usuario" type="text" name="usuario" maxlength="16" required="required">
                         <label for="form_control_1">Usuario</label>
                         <span class="help-block">Nombre de usuario con el que entrará a la aplicación (max. 16 caracteres)</span>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_2" type="password" name="password" maxlength="16" required="required">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_2" type="password" {% if usuario %}value="{{ usuario.password }}"{% endif %} name="password" maxlength="16" required="required">
                         <label for="form_control_2">Contraseña</label>
                         <span class="help-block">Tu contraseña (max. 16 caracteres)</span>
                     </div>
-                    <div class="form-group form-md-line-input">
+                    <div class="form-group form-md-line-input col-md-6">
                         <input class="form-control" id="form_control_3" type="password" name="password2" maxlength="16" required="required">
                         <label for="form_control_3">Repite contraseña</label>
                         <span class="help-block">Repite contraseña</span>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_4" type="text" name="nombre" placeholder="Nombre completo" required="required">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_4" type="text" name="nombre" {% if usuario %}value="{{ usuario.nombre }}"{% endif %} placeholder="Nombre completo" required="required">
                         <label for="form_control_4">Nombre</label>
                         <span class="help-block">Escribe tu nombre completo</span>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_5" type="text" name="apellidos" placeholder="Apellidos" required="required">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_5" type="text" name="apellidos" {% if usuario %}value="{{ usuario.apellidos }}"{% endif %} placeholder="Apellidos" required="required">
                         <label for="form_control_5">Apellidos</label>
                         <span class="help-block">Escribe tus apellidos</span>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_6" type="text" name="direccion" placeholder="Dirección" required="required">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_6" type="text" name="direccion" {% if usuario %}value="{{ usuario.direccion }}"{% endif %} placeholder="Dirección" required="required">
                         <label for="form_control_6">Dirección</label>
                         <span class="help-block">Calle, avenida, piso...</span>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_7" type="text" name="localidad" placeholder="Localidad" required="required">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_7" type="text" name="localidad" {% if usuario %}value="{{ usuario.localidad }}"{% endif %} placeholder="Localidad" required="required">
                         <label for="form_control_7">Localidad</label>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_8" type="text" name="provincia" placeholder="Provincia" required="required">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_8" type="text" name="provincia" {% if usuario %}value="{{ usuario.provincia }}"{% endif %} placeholder="Provincia" required="required">
                         <label for="form_control_8">Provincia</label>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_9" type="text" name="cpostal" placeholder="Código postal" required="required">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_9" type="text" name="cpostal" {% if usuario %}value="{{ usuario.cod_postal }}"{% endif %} placeholder="Código postal" required="required">
                         <label for="form_control_9">Código postal</label>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_10" type="text" name="telefono" placeholder="Nº de teléfono" maxlength="9">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_10" type="text" name="telefono" {% if usuario %}value="{{ usuario.telefono }}"{% endif %} placeholder="Nº de teléfono" maxlength="9">
                         <label for="form_control_10">Teléfono</label>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_11" type="text" name="movil" placeholder="Nº de móvil" maxlength="9">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_11" type="text" name="movil" {% if usuario %}value="{{ usuario.movil }}"{% endif %} placeholder="Nº de móvil" maxlength="9">
                         <label for="form_control_11">Móvil</label>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_12" type="text" name="email" placeholder="Email">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_12" type="email" name="email" {% if usuario %}value="{{ usuario.email }}"{% endif %} placeholder="Email" required="required">
                         <label for="form_control_12">Email</label>
                         <span class="help-block">Indica tu cuenta de correo principal</span>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <input class="form-control" id="form_control_13" type="text" name="email2" placeholder="Email secundario">
+                    <div class="form-group form-md-line-input col-md-6">
+                        <input class="form-control" id="form_control_13" type="email" name="email2" {% if usuario %}value="{{ usuario.email_secundario }}"{% endif %} placeholder="Email secundario" required="required">
                         <label for="form_control_13">Email secundario</label>
                         <span class="help-block">Indica tu cuenta de correo secundaria</span>
                     </div>
-                    <div class="form-group form-md-line-input has-info">
-                        <select class="form-control" id="form_control_14">
-                            <option>Socio</option>
-                            <option>Corredor</option>
-                            <option>Comprador</option>
-                            <option>Administrador</option>
+                    <div class="form-group form-md-line-input has-info col-md-6">
+                        <select class="form-control" id="form_control_14" name="rol">
+                            <option value="Socio">Socio</option>
+                            <option value="Corredor">Corredor</option>
+                            <option value="Comprador">Comprador</option>
+                            <option value="Administrador">Administrador</option>
                         </select>
                         <label for="form_control_1">Rol</label>
-                                    </div>
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="submit" name="enviar" {% if metodo %}value="{{ usuario.id }}"{% endif %} class="btn blue">Confirmar</button>
+                        <button type="reset" class="btn default" >Cancel</button>
+                    </div>
                 </form>
             </div>
         </div>
         <!-- END SAMPLE FORM PORTLET-->
     </div>
+{% endblock %}
+{% block scripts %}
+    {% if mensajeError %}
+        <script type="text/javascript">
+            $(function() {
+                setTimeout(function() {
+                    $.bootstrapGrowl("{{ mensajeError }}", { type: 'danger' });
+                }, 1000);
+            });
+        </script>
+    {% endif %}
+    {% if mensajeOk %}
+        <script type="text/javascript">
+            $(function() {
+                setTimeout(function() {
+                    $.bootstrapGrowl("{{ mensajeOk }}", { type: 'success' });
+                }, 1000);
+            });
+        </script>
+    {% endif %}
 {% endblock %}

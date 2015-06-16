@@ -11,14 +11,16 @@
                 <a href="/">Inicio</a>
                 <i class="fa fa-angle-right"></i>
             </li>
-            <li><a href="/listar_usuario">Listado de usuarios</a> </li>
+            <li>
+                <a href="/listar_usuario">Listado de usuarios</a>
+            </li>
         </ul>
     </div>
     <div class="portlet box blue">
         <div class="portlet-title">
 
             <div class="caption">
-                <i class="fa fa-cogs"></i>Bordered Bootstrap 3.0 Responsive Table
+                <i class="fa fa-cogs"></i>Listado de usuarios
             </div>
             <div class="tools">
                 <a title="" data-original-title="" href="javascript:;" class="collapse">
@@ -82,12 +84,14 @@
                             {% if user.notificaciones_carga == true %} Habilitado {% else %} No habilitado {% endif %}
                         </td>
                         <td>
-                            <button name="editar" class="btn btn-icon-only blue">
+                            <form action="/" method="post">
+                            <button name="editar_user" class="btn btn-icon-only blue" type="submit" value="{{ user.id }}">
                                 <i class="fa fa-edit"></i>
                             </button>
-                            <button name="eliminar" class="btn btn-icon-only red">
+                            <button name="eliminar_user" class="btn btn-icon-only red" type="submit" value="{{ user.id }}">
                                 <i class="fa fa-trash"></i>
                             </button>
+                            </form>
                         </td>
                     </tr>
                         {% endfor %}
@@ -97,4 +101,24 @@
         </div>
             {% endif %}
     </div>
+{% endblock %}
+{% block scripts %}
+    {% if mensajeOk %}
+        <script type="text/javascript">
+            $(function() {
+                setTimeout(function() {
+                    $.bootstrapGrowl("{{ mensajeOk }}", { type: 'success' });
+                }, 1000);
+            });
+        </script>
+    {% endif %}
+    {% if mensajeOkeditar %}
+        <script type="text/javascript">
+            $(function() {
+                setTimeout(function() {
+                    $.bootstrapGrowl("{{ mensajeOkeditar }}", { type: 'success' });
+                }, 1000);
+            });
+        </script>
+    {% endif %}
 {% endblock %}
