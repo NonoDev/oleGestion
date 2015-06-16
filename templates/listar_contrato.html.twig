@@ -16,5 +16,96 @@
             </li>
         </ul>
     </div>
+
+    <div class="portlet box blue">
+        <div class="portlet-title">
+
+            <div class="caption">
+                <i class="fa fa-cogs"></i>Listado de contratos
+            </div>
+            <div class="tools">
+                <a title="" data-original-title="" href="javascript:;" class="collapse">
+                </a>
+                <a title="" data-original-title="" href="#portlet-config" data-toggle="modal" class="config">
+                </a>
+                <a title="" data-original-title="" href="javascript:;" class="reload">
+                </a>
+                <a title="" data-original-title="" href="javascript:;" class="remove">
+                </a>
+            </div>
+        </div>
+        {% if datosCont %}
+            <div class="portlet-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>
+                                Referencia
+                            </th>
+                            <th>
+                                Boletín
+                            </th>
+                            <th>
+                                Corredor
+                            </th>
+                            <th>
+                                Comprador
+                            </th>
+                            <th>
+                                Socio/s
+                            </th>
+                            <th>
+                                Fecha de alta
+                            </th>
+                            <th>
+                                Calidad
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in datosCont %}
+                            <tr>
+                                <td>
+                                    {{ item.referencia }}
+                                </td>
+                                <td>
+                                    {{ item.boletin }}
+                                </td>
+                                <td>
+                                    <span class="tooltips" data-container="body" data-placement="bottom" data-original-title="{{ item.corredor_nombre }} {{ item.corredor_apellidos }}">{{ item.corredor_nombreUser }}</span>
+                                </td>
+                                <td>
+                                    <span class="tooltips" data-container="body" data-placement="bottom" data-original-title="{{ item.comprador_nombre }} {{ item.comprador_apellidos }}">{{ item.comprador_nombreUser }}</span>
+                                </td>
+                                <td>
+                                    <span class="tooltips" data-container="body" data-placement="bottom" data-original-title="{% for socio in item.socios %}{% if loop.last %}{{ socio.nombre }}{% else %}{{ socio.nombre }} &nbsp;-&nbsp; {% endif %}{% endfor %}"><i class="fa fa-users"></i>
+</span>
+                                </td>
+                                <td>
+                                    {{ item.fecha_alta }}
+                                </td>
+                                <td>
+                                    {{ item.calidad_aov }}
+                                </td>
+                                <td>
+                                    <form action="/" method="POST">
+                                        <button type="submit" name="editarContrato" class="btn btn-icon-only blue" value="{{ item.id }}">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button type="submit" name="eliminarContrato" class="btn btn-icon-only red" value="{{ item.id }}">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
     <!-- END PAGE HEADER-->
 {% endblock %}

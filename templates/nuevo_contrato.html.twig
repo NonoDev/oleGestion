@@ -1,5 +1,5 @@
 {% extends 'menus.html.twig' %}
-{% block title %}Interoleo gestión | Nuevo contratos{% endblock %}
+{% block title %}Interoleo gestión | Nuevo contrato{% endblock %}
 {% block content %}
     <h3 class="page-title">
         Nuevo contrato <small>Interoleo gestión</small>
@@ -12,8 +12,95 @@
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="/nuevo_contrato">Nuevo contrato</a>
+                <a href="/nuevo_contrato">{% if datosCont %}Editar contrato{% else %}Nuevo contrato{% endif %}</a>
             </li>
         </ul>
+    </div>
+        <!-- END SAMPLE FORM PORTLET-->
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-user font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> {% if datosCont %}EDITAR CONTRATO{% else %}NUEVO CONTRATO{% endif %}</span>
+                </div>
+
+            </div>
+            <div class="portlet-body form">
+                <form role="form" action="/" method="POST">
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_1" type="text" name="ref" maxlength="45" required="required" {% if datosCont %}value="{{ datosCont.referencia }}"{% endif %}>
+                        <label for="form_control_1">Referencia</label>
+                        <span class="help-block">Número de referencia del contrato</span>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <input class="form-control" id="form_control_2" type="text" name="bol" maxlength="45" required="required"{% if datosCont %}value="{{ datosCont.boletin }}"{% endif %}>
+                        <label for="form_control_2">Boletín</label>
+                        <span class="help-block">Boletín del contrato</span>
+                    </div>                    
+                    <div class="form-group form-md-line-input has-info">
+                        <select multiple class="form-control" name="socios[]" id="cooperativa" required>
+                            {% if socios %}
+    {% for socio in socios %}
+        <option value="{{ socio['id'] }}"
+                {%  for socioSel in sociosSelecc %}
+                    {% if socio['id']==socioSel['usuario_id'] %}
+                        selected
+                    {% endif %}
+                {%  endfor %}
+                >{{ socio['nombre'] }}</option>
+    {% endfor %}
+{% endif %}
+                        </select>
+                        <label for="form_control_1">Socio/s</label>
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                        <select class="form-control" id="form_control_14" name="corr">
+                            {% if corredores %}
+    {% for corredor in corredores %}
+        <option value="{{ corredor['id'] }}"
+                {% if corredor['id']==datosCont['corredor_id'] %}
+                    selected
+                {% endif %}
+                >{{ corredor['nombre'] }}</option>
+    {% endfor %}
+{% endif %}
+                        </select>
+                        <label for="form_control_1">Corredor</label>
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                        <select class="form-control" id="form_control_14" name="comp">
+                            {% if compradores %}
+    {% for comprador in compradores %}
+        <option value="{{ comprador['id'] }}"
+                {% if comprador['id']==datosCont['comprador_id'] %}
+                    selected
+                {% endif %}
+                >{{ comprador['nombre'] }}</option>
+    {% endfor %}
+{% endif %}
+                        </select>
+                        <label for="form_control_1">Comprador</label>
+                    </div>
+
+                    <div class="form-group form-md-line-input has-info">
+                        <select class="form-control" id="form_control_14" name="calidad">
+                            <option value="aovl" {% if datosCont['calidad_aov']=='AOVL' %}selected{% endif %}>AOVL</option>
+                            <option value="aove" {% if datosCont['calidad_aov']=='AOVE' %}selected{% endif %}>AOVE</option>
+                            <option value="aov" {% if datosCont['calidad_aov']=='AOV' %}selected{% endif %}>AOV</option>
+                        </select>
+                        <label for="form_control_1">Calidad</label>
+                    </div>
+                    {% if datosCont %}
+    <button type="submit" name="botonEditaContrato" class="btn blue" value="{{ datosCont['id'] }}"><span class="md-click-circle md-click-animate"></span>Editar</button>
+{% else %}
+    <button type="submit" name="botonCreaContrato" class="btn blue"><span class="md-click-circle md-click-animate"></span>Crear</button>
+{% endif %}
+
+                    <a href="/" class="btn default">Cancelar</a>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
     </div>
 {% endblock %}
