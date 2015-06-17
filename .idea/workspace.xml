@@ -34,12 +34,17 @@
         <entry file="file://$PROJECT_DIR$/public/index.php">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <state vertical-scroll-proportion="0.33168316" vertical-offset="6836" max-vertical-offset="9078">
               <caret line="410" column="22" selection-start-line="410" selection-start-column="21" selection-end-line="410" selection-end-column="22" />
 =======
             <state vertical-scroll-proportion="-13.872727" vertical-offset="4881" max-vertical-offset="6596">
               <caret line="332" column="54" selection-start-line="332" selection-start-column="54" selection-end-line="332" selection-end-column="54" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+            <state vertical-scroll-proportion="45.115383" vertical-offset="6817" max-vertical-offset="9469">
+              <caret line="332" column="35" selection-start-line="332" selection-start-column="35" selection-end-line="332" selection-end-column="35" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
               <folding />
             </state>
           </provider>
@@ -55,9 +60,14 @@
       <file leaf-file-name="listar_contrato.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/listar_contrato.html.twig">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="7.7454543" vertical-offset="1038" max-vertical-offset="1972">
               <caret line="36" column="21" selection-start-line="36" selection-start-column="14" selection-end-line="36" selection-end-column="21" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+            <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="1989">
+              <caret line="36" column="14" selection-start-line="36" selection-start-column="14" selection-end-line="36" selection-end-column="14" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
               <folding />
             </state>
           </provider>
@@ -73,7 +83,7 @@
       <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.461538" vertical-offset="1996" max-vertical-offset="2737">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1996" max-vertical-offset="2737">
               <caret line="138" column="37" selection-start-line="138" selection-start-column="37" selection-end-line="138" selection-end-column="37" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
               <folding />
@@ -81,6 +91,7 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="nuevo_contrato.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/nuevo_contrato.html.twig">
@@ -95,10 +106,21 @@
               <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
               <folding />
+=======
+      <file leaf-file-name="nueva_notificacion.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/nueva_notificacion.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4493927" vertical-offset="1078" max-vertical-offset="1819">
+              <caret line="83" column="117" selection-start-line="83" selection-start-column="117" selection-end-line="83" selection-end-column="117" />
+              <folding>
+                <element signature="n#style#0;n#div#3;n#form#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+              </folding>
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="nueva_notificacion.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/nueva_notificacion.html.twig">
@@ -112,11 +134,19 @@
             <state vertical-scroll-proportion="0.8623482" vertical-offset="840" max-vertical-offset="1887">
               <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+      <file leaf-file-name="ajax.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/js/ajax.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+              <caret line="27" column="74" selection-start-line="27" selection-start-column="74" selection-end-line="27" selection-end-column="74" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="menus.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/menus.html.twig">
@@ -130,11 +160,19 @@
             <state vertical-scroll-proportion="-22.307692" vertical-offset="1052" max-vertical-offset="1870">
               <caret line="96" column="26" selection-start-line="96" selection-start-column="26" selection-end-line="96" selection-end-column="26" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+      <file leaf-file-name="nuevo_contrato.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/nuevo_contrato.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.0" vertical-offset="1167" max-vertical-offset="1921">
+              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="ajax.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/ajax.js">
@@ -148,6 +186,13 @@
             <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="136">
               <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+      <file leaf-file-name="nuevo_usuario.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/nuevo_usuario.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1632" max-vertical-offset="2278">
+              <caret line="96" column="26" selection-start-line="96" selection-start-column="26" selection-end-line="96" selection-end-column="26" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
               <folding />
             </state>
           </provider>
@@ -199,9 +244,14 @@
       <file leaf-file-name="menus.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/menus.html.twig">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="0.0" vertical-offset="4437" max-vertical-offset="41973">
               <caret line="261" column="62" selection-start-line="261" selection-start-column="62" selection-end-line="261" selection-end-column="62" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+            <state vertical-scroll-proportion="0.0" vertical-offset="4437" max-vertical-offset="41531">
+              <caret line="261" column="21" selection-start-line="261" selection-start-column="21" selection-end-line="261" selection-end-column="21" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
               <folding />
             </state>
           </provider>
@@ -234,7 +284,6 @@
         <option value="$PROJECT_DIR$/public/js/ajax.js" />
 =======
         <option value="$PROJECT_DIR$/templates/listar_notificacion.html.twig" />
-        <option value="$PROJECT_DIR$/templates/nueva_notificacion.html.twig" />
         <option value="$PROJECT_DIR$/templates/nuevo_usuario.html.twig" />
         <option value="$PROJECT_DIR$/config.php" />
         <option value="$PROJECT_DIR$/templates/menus.html.twig" />
@@ -243,7 +292,12 @@
         <option value="$PROJECT_DIR$/templates/listar_contrato.html.twig" />
         <option value="$PROJECT_DIR$/public/index.php" />
         <option value="$PROJECT_DIR$/templates/nuevo_contrato.html.twig" />
+<<<<<<< HEAD
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+        <option value="$PROJECT_DIR$/public/js/ajax.js" />
+        <option value="$PROJECT_DIR$/templates/nueva_notificacion.html.twig" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
       </list>
     </option>
   </component>
@@ -351,7 +405,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/Kindie-master" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
     <property name="FullScreen" value="false" />
     <property name="options.lastSelected" value="preferences.pluginManager" />
     <property name="options.splitter.main.proportions" value="0.3" />
@@ -379,6 +437,9 @@
       <BehatRunner />
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
@@ -386,9 +447,6 @@
       <arguments />
       <pass-parent-envs>true</pass-parent-envs>
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -408,10 +466,14 @@
   </component>
   <component name="ToolWindowManager">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
 =======
     <frame x="-8" y="-8" width="1456" height="916" extended-state="6" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+    <frame x="-8" y="-8" width="1456" height="916" extended-state="0" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -426,13 +488,13 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294271" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294271" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -456,18 +518,16 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1411" max-vertical-offset="1972">
-          <caret line="83" column="22" selection-start-line="83" selection-start-column="22" selection-end-line="83" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/nueva_notificacion.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="408">
           <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+<<<<<<< HEAD
+=======
+          <folding>
+            <element signature="n#style#0;n#div#3;n#form#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+          </folding>
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
         </state>
       </provider>
     </entry>
@@ -504,7 +564,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1802">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -550,6 +609,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="408">
           <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+<<<<<<< HEAD
+=======
+          <folding>
+            <element signature="n#style#0;n#div#3;n#form#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+          </folding>
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
         </state>
       </provider>
     </entry>
@@ -586,7 +651,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="408">
           <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -779,8 +843,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="164" max-vertical-offset="1785">
           <caret line="98" column="10" selection-start-line="16" selection-start-column="4" selection-end-line="98" selection-end-column="10" />
+<<<<<<< HEAD
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
           <folding />
+=======
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
         </state>
       </provider>
     </entry>
@@ -832,12 +899,17 @@
     <entry file="file://$PROJECT_DIR$/templates/menus.html.twig">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="1208" max-vertical-offset="1887">
           <caret line="105" column="14" selection-start-line="105" selection-start-column="14" selection-end-line="105" selection-end-column="14" />
 =======
         <state vertical-scroll-proportion="0.0" vertical-offset="4437" max-vertical-offset="41973">
           <caret line="261" column="62" selection-start-line="261" selection-start-column="62" selection-end-line="261" selection-end-column="62" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="4437" max-vertical-offset="41531">
+          <caret line="261" column="21" selection-start-line="261" selection-start-column="21" selection-end-line="261" selection-end-column="21" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
           <folding />
         </state>
       </provider>
@@ -845,10 +917,14 @@
     <entry file="file://$PROJECT_DIR$/templates/menus.html.twig">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <state vertical-scroll-proportion="-8.5" vertical-offset="2142" max-vertical-offset="41531">
           <caret line="139" column="30" selection-start-line="139" selection-start-column="30" selection-end-line="139" selection-end-column="30" />
 =======
         <state vertical-scroll-proportion="-22.307692" vertical-offset="1052" max-vertical-offset="1870">
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="1632" max-vertical-offset="2278">
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
           <caret line="96" column="26" selection-start-line="96" selection-start-column="26" selection-end-line="96" selection-end-column="26" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
           <folding />
@@ -863,7 +939,7 @@
 =======
     <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.461538" vertical-offset="1996" max-vertical-offset="2737">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1996" max-vertical-offset="2737">
           <caret line="138" column="37" selection-start-line="138" selection-start-column="37" selection-end-line="138" selection-end-column="37" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
           <folding />
@@ -878,13 +954,19 @@
 =======
     <entry file="file://$PROJECT_DIR$/templates/listar_contrato.html.twig">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="7.7454543" vertical-offset="1038" max-vertical-offset="1972">
           <caret line="36" column="21" selection-start-line="36" selection-start-column="14" selection-end-line="36" selection-end-column="21" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="1989">
+          <caret line="36" column="14" selection-start-line="36" selection-start-column="14" selection-end-line="36" selection-end-column="14" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/templates/nueva_notificacion.html.twig">
       <provider selected="true" editor-type-id="text-editor">
@@ -896,10 +978,17 @@
         <state vertical-scroll-proportion="-13.872727" vertical-offset="4881" max-vertical-offset="6596">
           <caret line="332" column="54" selection-start-line="332" selection-start-column="54" selection-end-line="332" selection-end-column="54" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+    <entry file="file://$PROJECT_DIR$/templates/nuevo_contrato.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.0" vertical-offset="1167" max-vertical-offset="1921">
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/public/js/ajax.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -911,12 +1000,19 @@
         <state vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="408">
           <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+    <entry file="file://$PROJECT_DIR$/public/js/ajax.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+          <caret line="27" column="74" selection-start-line="27" selection-start-column="74" selection-end-line="27" selection-end-column="74" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/nuevo_contrato.html.twig">
+    <entry file="file://$PROJECT_DIR$/public/index.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
 <<<<<<< HEAD
         <state vertical-scroll-proportion="0.33168316" vertical-offset="6836" max-vertical-offset="9078">
           <caret line="410" column="22" selection-start-line="410" selection-start-column="21" selection-end-line="410" selection-end-column="22" />
@@ -924,7 +1020,21 @@
         <state vertical-scroll-proportion="0.8623482" vertical-offset="840" max-vertical-offset="1887">
           <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
 >>>>>>> a24b58ee86aedf70bbce16b867c11c8a61d37db8
+=======
+        <state vertical-scroll-proportion="45.115383" vertical-offset="6817" max-vertical-offset="9469">
+          <caret line="332" column="35" selection-start-line="332" selection-start-column="35" selection-end-line="332" selection-end-column="35" />
+>>>>>>> 4a1500677e650f483056d96e3fdadfcba45b15eb
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/nueva_notificacion.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4493927" vertical-offset="1078" max-vertical-offset="1819">
+          <caret line="83" column="117" selection-start-line="83" selection-start-column="117" selection-end-line="83" selection-end-column="117" />
+          <folding>
+            <element signature="n#style#0;n#div#3;n#form#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
