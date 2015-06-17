@@ -1,5 +1,9 @@
 {% extends 'menus.html.twig' %}
+{% block title %}Interoleo gestión | Nueva notificación{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
 
+{% endblock %}
 {% block content %}
     <h3 class="page-title">
         Nueva notificación <small>Interoleo gestión</small>
@@ -12,33 +16,81 @@
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="/listar_contrato">Nueva notificacion</a>
+                <a href="/nueva_notificacion">Nueva notificación</a>
             </li>
         </ul>
     </div>
 
-    <select id="contratos">
-        {% for contrato in contratos %}
-            <option value="{{ contrato.id }}">{{ contrato.referencia }}</option>
-        {% endfor %}
-    </select>
-    <select id="cosa">
-        <option value="0">Selecciona un contrato</option>
-    </select>
 
-    <select id="cisternas">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-    </select>
-    <div id="inputs">
 
+        <!-- END SAMPLE FORM PORTLET-->
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-user font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> NUEVA NOTIFICACIÓN </span>
+                </div>
+
+            </div>
+            <div class="portlet-body form">
+                <form role="form" action="/" method="POST">
+
+                    <div class="form-group form-md-line-input">
+                    <select id="contratos" class="form-control">
+                    {% for contrato in contratos %}
+                        <option value="{{ contrato.id }}">{{ contrato.referencia }}</option>
+                    {% endfor %}
+                        </select>
+                        <label for="contratos">Contratos</label>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                        <select id="cosa" class="form-control">
+                            <option value="0">Selecciona un contrato</option>
+                        </select>
+                        <label for="cosa">Socio</label>
+                        </div>
+
+                    <div class="form-group form-md-line-input">
+                        <select id="cisternas" class="form-control">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <label for="cisternas">Cisternas</label>
+                    </div>
+
+                    <div id="inputs" style="display: none;"><label for="inputs">Matrículas</label></div>
+
+                    <div class="form-group form-md-line-input has-info">
+                        <select class="form-control" id="form_control_14" name="estado">
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Pagado">Pagado</option>
+                            <option value="Finalizado">Finalizado</option>
+                            <option value="Incidencia">Incidencia</option>
+                        </select>
+                        <label for="form_control_2">Estado</label>
+                    </div>
+
+                    <div class="form-group form-md-line-input">
+                        <textarea class="form-control" name="observaciones" rows="3" placeholder="Escribe aquí las observaciones..."></textarea>
+                        <label for="form_control_1">Observaciones</label>
+                    </div>
+
+                    <button type="submit" name="botonCreaNotificacion" class="btn blue"><span class="md-click-circle md-click-animate"></span>Crear</button>
+                    <a href="/" class="btn default">Cancelar</a>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
     </div>
+
 {% endblock %}

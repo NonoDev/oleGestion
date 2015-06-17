@@ -34,17 +34,31 @@ $app->get('/', function() use ($app) {
     }
 })->name('inicio');
 
+
+//Cuando pulsas en logout
+
 $app->get('/logout', function() use ($app) {
     session_destroy();
     $app->redirect($app->router()->urlFor('inicio'));
 });
+
+//Página para las nuevas notificaciones
+/*$app->get('/nueva_notificacion', function() use ($app) {
+    if(isset($_SESSION['usuarioLogin'])){
+        $app->render('inicio.html.twig');
+    }else {
+        $app->render('login.html.twig');
+    }
+});*/
 
 //Página nuevas notificaciones
 $app->get('/nueva_notificacion', function() use ($app) {
     $contratos = ORM::for_table('contrato')
         ->find_many();
 
+
     $app->render('nueva_notificacion.html.twig',array('contratos' => $contratos));
+
 })->name('nueva_notificacion');
 
 //ajax contratos
@@ -76,14 +90,15 @@ $app->get('/listar_notificacion', function() use ($app) {
 //Página nuevo contrato
 $app->get('/nuevo_contrato', function() use ($app) {
     $soc = ORM::for_table('usuario')
-        ->where('rol','Socio')
-        ->find_many();
+    ->where('rol','Socio')
+    ->find_many();
     $corr = ORM::for_table('usuario')
-        ->where('rol','Corredor')
-        ->find_many();
+    ->where('rol','Corredor')
+    ->find_many();
     $comp = ORM::for_table('usuario')
-        ->where('rol','Comprador')
-        ->find_many();
+    ->where('rol','Comprador')
+    ->find_many();
+
     $app->render('nuevo_contrato.html.twig',array('socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
     die();
 })->name('nuevo_contrato');
@@ -131,7 +146,10 @@ $app->get('/listar_contrato', function() use ($app) {
         $i++;
     }
     $app->render('listar_contrato.html.twig',array('datosCont' => $miArray));
+
 })->name('listar_contrato');
+
+
 //Página nuevo usuario
 $app->get('/nuevo_usuario', function() use ($app) {
     $app->render('nuevo_usuario.html.twig');
@@ -147,13 +165,15 @@ $app->get('/listar_usuario', function() use ($app) {
 // -------------------------------------- BOTONES ------------------------------------------------
 $app->post('/', function() use ($app) {
     //Al pulsar el boton de login
-    if(isset($_POST['username'])){
+
+    if(isset($_POST['username'])){        
+
         $nombreUser = htmlentities($_POST['username']);
         $passUser = htmlentities($_POST['password']);
         $cons = ORM::for_table('usuario')
             ->where('nombre_usuario',$nombreUser)
             ->where('password', $passUser)
-            ->find_one();
+            ->find_one();        
         if($cons){
             $datetimeActual = date('Y-m-d H:i:s');
             $userAModificar = ORM::for_table('usuario')->find_one($cons['id']);
@@ -161,9 +181,11 @@ $app->post('/', function() use ($app) {
             $userAModificar->save();
 
             $cons = ORM::for_table('usuario')
-                ->where('nombre_usuario',$nombreUser)
-                ->where('password', $passUser)
-                ->find_one();
+
+            ->where('nombre_usuario',$nombreUser)
+            ->where('password', $passUser)
+            ->find_one();
+
 
             $_SESSION['usuarioLogin'] = $cons;
             $app->render('inicio.html.twig');
@@ -171,6 +193,7 @@ $app->post('/', function() use ($app) {
             $app->render('login.html.twig',array('errorLogin' => 'ok'));
         }
     }
+
 
     //Al pulsar el boton de crear nuevo contrato
     if(isset($_POST['botonCreaContrato'])){

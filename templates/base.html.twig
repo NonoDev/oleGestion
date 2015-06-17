@@ -116,6 +116,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="js/ajax.js"></script>
         {% block scripts %} {% endblock %}
         <!-- END PAGE LEVEL SCRIPTS -->
+
         <script>
             jQuery(document).ready(function() {
                 Metronic.init(); // init metronic core componets
@@ -132,6 +133,24 @@ License: You must have a valid license purchased only from themeforest(the above
                 Tasks.initDashboardWidget();
             });
         </script>
+        {% if mensajeOk %}
+        <script type="text/javascript">
+            $(function() {
+                setTimeout(function() {
+                    $.bootstrapGrowl("{{ mensajeOk }}", { type: 'success' });
+                }, 1000);
+            });
+        </script>
+        {% endif %}
+        {% if mensajeError %}
+            <script type="text/javascript">
+                $(function() {
+                    setTimeout(function() {
+                        $.bootstrapGrowl("{{ mensajeError }}", { type: 'danger' });
+                    }, 1000);
+                });
+            </script>
+        {% endif %}
         <!-- END JAVASCRIPTS -->
     </body>
 </html>

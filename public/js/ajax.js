@@ -21,6 +21,7 @@ $(document).ready(function(){
     $('#cisternas').change(function()
     {
         $("#inputs input").remove();
+        $("#inputs").show();
         valor = $(this).val();
 
         for(i = 1;i <= valor;i++){
