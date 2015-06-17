@@ -16,4 +16,95 @@
             </li>
         </ul>
     </div>
+    <div class="portlet box blue">
+        <div class="portlet-title">
+
+            <div class="caption">
+                <i class="fa fa-cogs"></i>Listado de notificaciones
+            </div>
+            <div class="tools">
+                <a title="" data-original-title="" href="javascript:;" class="collapse">
+                </a>
+                <a title="" data-original-title="" href="#portlet-config" data-toggle="modal" class="config">
+                </a>
+                <a title="" data-original-title="" href="javascript:;" class="reload">
+                </a>
+                <a title="" data-original-title="" href="javascript:;" class="remove">
+                </a>
+            </div>
+        </div>
+        {% if notificaciones %}
+            <div class="portlet-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>
+                                Contrato
+                            </th>
+                            <th>
+                                Socio
+                            </th>
+                            <th>
+                                Cisternas
+                            </th>
+                            <th>
+                                Fecha de carga
+                            </th>
+                            <th>
+                                Fecha de alta
+                            </th>
+                            <th>
+                                Usuario creador
+                            </th>
+                            <th>
+                                Estado
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for noti in notificaciones %}
+                            <tr>
+                                <td>
+                                    {{ noti.id_contrato }}
+                                </td>
+                                <td>
+                                    {{ noti.id_socio }}
+                                </td>
+                                <td>
+                                    {{ noti.cisternas }}
+                                </td>
+                                <td>
+                                    {{ noti.fecha_carga|date('d/m/Y H:i:s') }}
+                                </td>
+                                <td>
+                                    {{ noti.fecha_alta|date('d/m/Y H:i:s') }}
+                                </td>
+                                <td>
+                                    {{ noti.id_usuario_creador }}
+                                </td>
+                                <td>
+                                    {{ noti.estado }}
+                                </td>
+                                <td>
+                                    <form action="/" method="post">
+                                        <button name="editar_noti" class="btn btn-icon-only blue" type="submit" value="">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button name="eliminar_noti" class="btn btn-icon-only red" type="submit" value="{{ noti.id }}">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

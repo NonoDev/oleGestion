@@ -1,8 +1,6 @@
 <?php
-
 include "../vendor/autoload.php";
 require_once "../config.php";
-
 $app = new \Slim\Slim(
     array(
         'view' => new \Slim\Views\Twig(),
@@ -10,7 +8,6 @@ $app = new \Slim\Slim(
         'debug' => true
     )
 );
-
 $view = $app->view();
 $view->parserOptions = array(
     'charset' => 'utf-8',
@@ -19,29 +16,27 @@ $view->parserOptions = array(
     'strict_variables' => false,
     'autoescape' => true
 );
-
 # Add extensions.
-
 $view->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
     new \Twig_Extension_Debug()
 );
-
 session_cache_limiter(false);
 session_start();
-
-
-
 //Página de inicio de la aplicación
 $app->get('/', function() use ($app) {
     if(isset($_SESSION['usuarioLogin'])){
-        $app->render('inicio.html.twig');
+        $app->render('inicio.html.twig', [
+            'nombre' => $_SESSION['usuarioLogin']['nombre_usuario']
+        ]);
     }else {
         $app->render('login.html.twig');
     }
 })->name('inicio');
 
+
 //Cuando pulsas en logout
+
 $app->get('/logout', function() use ($app) {
     session_destroy();
     $app->redirect($app->router()->urlFor('inicio'));
@@ -62,18 +57,36 @@ $app->get('/nueva_notificacion', function() use ($app) {
         ->find_many();
 
 
-
     $app->render('nueva_notificacion.html.twig',array('contratos' => $contratos));
 
 })->name('nueva_notificacion');
 
+//ajax contratos
+$app->get('/rellenarContrato/:valor', function($valor){
+
+    $usuarios = ORM::for_table('usuario_contrato')
+        ->select('usuario.id')
+        ->select('usuario.nombre')
+        ->where('contrato_id', $valor)
+        ->join('usuario', array('usuario_contrato.usuario_id' ,'=', 'usuario.id'))
+        ->find_many();
+
+    foreach($usuarios as $user){
+        echo "<option value='".$user['id']."'>".$user['nombre']."</option>";
+    }
+
+
+})->name('rellenarContrato');
+
 //Página listar notificaciones
 $app->get('/listar_notificacion', function() use ($app) {
 
-    $app->render('listar_notificacion.html.twig');
-
+    $notificaciones = ORM::for_table('notificacion')
+        ->find_many();
+    $app->render('listar_notificacion.html.twig', [
+        'notificaciones' => $notificaciones
+    ]);
 })->name('listar_notificacion');
-
 //Página nuevo contrato
 $app->get('/nuevo_contrato', function() use ($app) {
     $soc = ORM::for_table('usuario')
@@ -85,6 +98,7 @@ $app->get('/nuevo_contrato', function() use ($app) {
     $comp = ORM::for_table('usuario')
     ->where('rol','Comprador')
     ->find_many();
+
     $app->render('nuevo_contrato.html.twig',array('socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
     die();
 })->name('nuevo_contrato');
@@ -136,31 +150,24 @@ $app->get('/listar_contrato', function() use ($app) {
 })->name('listar_contrato');
 
 
-
 //Página nuevo usuario
 $app->get('/nuevo_usuario', function() use ($app) {
-
     $app->render('nuevo_usuario.html.twig');
-
 })->name('nuevo_usuario');
-
 //Página listar usuarios
 $app->get('/listar_usuario', function() use ($app) {
-
     $usuarios = ORM::for_table('usuario')
         ->find_many();
-
     $app->render('listar_usuario.html.twig', [
         'usuarios' => $usuarios
     ]);
-
 })->name('listar_usuario');
-
 // -------------------------------------- BOTONES ------------------------------------------------
-
 $app->post('/', function() use ($app) {
     //Al pulsar el boton de login
+
     if(isset($_POST['username'])){        
+
         $nombreUser = htmlentities($_POST['username']);
         $passUser = htmlentities($_POST['password']);
         $cons = ORM::for_table('usuario')
@@ -174,9 +181,11 @@ $app->post('/', function() use ($app) {
             $userAModificar->save();
 
             $cons = ORM::for_table('usuario')
+
             ->where('nombre_usuario',$nombreUser)
             ->where('password', $passUser)
-            ->find_one(); 
+            ->find_one();
+
 
             $_SESSION['usuarioLogin'] = $cons;
             $app->render('inicio.html.twig');
@@ -184,6 +193,8 @@ $app->post('/', function() use ($app) {
             $app->render('login.html.twig',array('errorLogin' => 'ok'));
         }
     }
+
+
     //Al pulsar el boton de crear nuevo contrato
     if(isset($_POST['botonCreaContrato'])){
         $num_referencia = htmlentities($_POST['ref']);
@@ -336,7 +347,6 @@ $app->post('/', function() use ($app) {
         $nuevoContrato->calidad_AOV = $calidad;
         $nuevoContrato->save();
 
-
         foreach($socios as $socio){
             $nuevoContratoSocios = ORM::for_table('usuario_contrato')->create();
             $nuevoContratoSocios->usuario_id = $socio;
@@ -386,8 +396,7 @@ $app->post('/', function() use ($app) {
         }
         $app->render('listar_contrato.html.twig', array('datosCont' => $miArray, 'mensajeOk' => 'Contrato modificado con éxito'));
     }
-
-    // Al pulsarl el botón CONFIRMAR en el formulario de registro del usuario
+    // REGISTRO USUARIOS
     if(isset($_POST['enviar'])){
         $registros = array();
         $registros = $_POST;
@@ -467,7 +476,6 @@ $app->post('/', function() use ($app) {
                             'mensajeOk' => $ok,
                             'usuarios' => $usuarios
                         ));
-                        die();
                     }
                 }
                 $usuario->save();
@@ -496,9 +504,8 @@ $app->post('/', function() use ($app) {
             'mensajeError' => $error,
             'mensajeOk' => $ok,
         ));
-        die();
     }
-    // Al pulsar el boton eliminar de la lista de usuarios
+    // ELIMINAR USUARIOS
     if(isset($_POST['eliminar_user'])){
         $user = ORM::for_table('usuario')
             ->where('id',$_POST['eliminar_user'])
@@ -508,12 +515,12 @@ $app->post('/', function() use ($app) {
         $usuarios = ORM::for_table('usuario')
             ->find_many();
         $app->render('listar_usuario.html.twig',array(
+            'mensajeError' => 'Fallo al eliminar el usuario',
             'mensajeOk' => 'Usuario eliminado de forma correcta',
             'usuarios' => $usuarios
         ));
-        die();
     }
-    // Al pusar el botón editar de la lista de usuarios
+    // EDITAR USUARIOS
     if(isset($_POST['editar_user'])){
         $user = ORM::for_table('usuario')
             ->where('id',$_POST['editar_user'])
@@ -523,13 +530,22 @@ $app->post('/', function() use ($app) {
             'usuario' => $user,
             'metodo' => 'editar'
         ));
-        die();
     }
 
-    if(isset($_POST['botonCreaNotificacion'])){
-        echo "VA";die();
+    // ELIMINAR NOTIFICACIONES
+    if(isset($_POST['eliminar_noti'])){
+        $noti = ORM::for_table('notificacion')
+            ->where('id',$_POST['eliminar_noti'])
+            ->find_one();
+        $noti->delete();
+        $noti->save();
+        $notificaciones = ORM::for_table('notificacion')
+            ->find_many();
+        $app->render('listar_notificacion.html.twig',array(
+            'mensajeError' => 'Fallo al eliminar la notificación',
+            'mensajeOk' => 'Notificación eliminada de forma correcta',
+            'notificaciones'=> $notificaciones
+        ));
     }
-
 });
-
 $app->run();
