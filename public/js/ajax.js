@@ -16,4 +16,16 @@ $(document).ready(function(){
         });
         //}
     });
+
+    // inputs segun cisternas
+    $('#cisternas').change(function()
+    {
+        $("#inputs input").remove();
+        valor = $(this).val();
+
+        for(i = 1;i <= valor;i++){
+            $("#inputs").append("<input type='text' value='"+i+"'>");
+        }
+
+    });
 });

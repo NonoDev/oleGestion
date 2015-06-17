@@ -26,7 +26,9 @@ session_start();
 //Página de inicio de la aplicación
 $app->get('/', function() use ($app) {
     if(isset($_SESSION['usuarioLogin'])){
-        $app->render('inicio.html.twig');
+        $app->render('inicio.html.twig', [
+            'nombre' => $_SESSION['usuarioLogin']['nombre_usuario']
+        ]);
     }else {
         $app->render('login.html.twig');
     }
