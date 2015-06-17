@@ -27,7 +27,7 @@ session_start();
 $app->get('/', function() use ($app) {
     if(isset($_SESSION['usuarioLogin'])){
         $app->render('inicio.html.twig', [
-            'nombre' => $_SESSION['usuarioLogin']['nombre_usuario']
+            'nombre' => $_SESSION['usuarioLogin']
         ]);
     }else {
         $app->render('login.html.twig');
@@ -57,7 +57,10 @@ $app->get('/nueva_notificacion', function() use ($app) {
         ->find_many();
 
 
-    $app->render('nueva_notificacion.html.twig',array('contratos' => $contratos));
+    $app->render('nueva_notificacion.html.twig',[
+        'contratos' => $contratos,
+        'nombre' => $_SESSION['usuarioLogin']
+    ]);
 
 })->name('nueva_notificacion');
 
@@ -84,7 +87,8 @@ $app->get('/listar_notificacion', function() use ($app) {
     $notificaciones = ORM::for_table('notificacion')
         ->find_many();
     $app->render('listar_notificacion.html.twig', [
-        'notificaciones' => $notificaciones
+        'notificaciones' => $notificaciones,
+        'nombre' => $_SESSION['usuarioLogin']
     ]);
 })->name('listar_notificacion');
 //Página nuevo contrato
@@ -99,7 +103,12 @@ $app->get('/nuevo_contrato', function() use ($app) {
     ->where('rol','Comprador')
     ->find_many();
 
-    $app->render('nuevo_contrato.html.twig',array('socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
+    $app->render('nuevo_contrato.html.twig',[
+        'socios' => $soc,
+        'corredores' => $corr,
+        'compradores' => $comp,
+        'nombre' => $_SESSION['usuarioLogin']
+    ]);
     die();
 })->name('nuevo_contrato');
 
@@ -145,21 +154,27 @@ $app->get('/listar_contrato', function() use ($app) {
         $miArray[$i]['socios'] = $socios;
         $i++;
     }
-    $app->render('listar_contrato.html.twig',array('datosCont' => $miArray));
+    $app->render('listar_contrato.html.twig',[
+        'datosCont' => $miArray,
+        'nombre' => $_SESSION['usuarioLogin']
+    ]);
 
 })->name('listar_contrato');
 
 
 //Página nuevo usuario
 $app->get('/nuevo_usuario', function() use ($app) {
-    $app->render('nuevo_usuario.html.twig');
+    $app->render('nuevo_usuario.html.twig', [
+        'nombre' => $_SESSION['usuarioLogin']
+    ]);
 })->name('nuevo_usuario');
 //Página listar usuarios
 $app->get('/listar_usuario', function() use ($app) {
     $usuarios = ORM::for_table('usuario')
         ->find_many();
     $app->render('listar_usuario.html.twig', [
-        'usuarios' => $usuarios
+        'usuarios' => $usuarios,
+        'nombre' => $_SESSION['usuarioLogin']
     ]);
 })->name('listar_usuario');
 // -------------------------------------- BOTONES ------------------------------------------------

@@ -137,12 +137,13 @@
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                     <i class="icon-user"></i>
 					<span class="username username-hide-on-mobile">
-					{{ nombre }}</span>
+                            {{ nombre['nombre_usuario'] }}
+                        </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li>
-                                <a href="/desconectar">
+                                <a href="/logout">
                                     <i class="icon-key"></i> Log Out </a>
                             </li>
                         </ul>
@@ -197,6 +198,8 @@
                         </form>
                         <!-- END RESPONSIVE QUICK SEARCH FORM -->
                     </li>
+                    <!-- menu administracion -->
+                    {% if nombre['rol'] == 'Administrador' %}
                     <li>
                         <a href="/">
                             <i class="icon-home"></i>
@@ -259,6 +262,40 @@
                             </li>
                         </ul>
                     </li>
+                        {% else %}
+                            <li>
+                                <a href="/">
+                                    <i class="icon-home"></i>
+                                    <span class="title">Inicio</span>
+                                    <span class="selected"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-bell"></i>
+                                    <span class="title">Notificaciones</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    {% if nombre['notificaciones_carga'] == 1 %}
+                                    <li>
+                                        <a href="/nueva_notificacion">
+                                            <i class="icon-plus"></i> Nueva
+                                            <span class="selected"></span>
+                                        </a>
+                                    </li>
+                                        {% endif %}
+                                    <li>
+                                        <a href="/listar_notificacion">
+                                            <i class="icon-list"></i>
+                                            Listar</a>
+                                    </li>
+                                </ul>
+                            </li>
+                {% endif %}
+                    <!-- fin menu administracion -->
+
                 </ul>
                 <!-- END SIDEBAR MENU -->
             </div>
