@@ -85,9 +85,13 @@ $app->get('/rellenarContrato/:valor', function($valor){
 $app->get('/listar_notificacion', function() use ($app) {
 
     $notificaciones = ORM::for_table('notificacion')
+        ->where('id_usuario_creador', $_SESSION['usuarioLogin']['id'])
+        ->find_many();
+    $notiAdmim = ORM::for_table('notificacion')
         ->find_many();
     $app->render('listar_notificacion.html.twig', [
         'notificaciones' => $notificaciones,
+        'notisAdmin' => $notiAdmim,
         'nombre' => $_SESSION['usuarioLogin']
     ]);
 })->name('listar_notificacion');

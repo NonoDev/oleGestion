@@ -33,7 +33,7 @@
                 </a>
             </div>
         </div>
-        {% if notificaciones %}
+        {% if notificaciones or notisAdmin %}
             <div class="portlet-body">
                 <div class="table-responsive">
                     <table class="table table-bordered">
@@ -66,6 +66,43 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% if nombre['rol'] == 'Administrador' %}
+                            {% for noti in notisAdmin %}
+                                <tr>
+                                    <td>
+                                        {{ noti.id_contrato }}
+                                    </td>
+                                    <td>
+                                        {{ noti.id_socio }}
+                                    </td>
+                                    <td>
+                                        {{ noti.cisternas }}
+                                    </td>
+                                    <td>
+                                        {{ noti.fecha_carga|date('d/m/Y H:i:s') }}
+                                    </td>
+                                    <td>
+                                        {{ noti.fecha_alta|date('d/m/Y H:i:s') }}
+                                    </td>
+                                    <td>
+                                        {{ noti.id_usuario_creador }}
+                                    </td>
+                                    <td>
+                                        {{ noti.estado }}
+                                    </td>
+                                    <td>
+                                        <form action="/" method="post">
+                                            <button name="editar_noti" class="btn btn-icon-only blue" type="submit" value="">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button name="eliminar_noti" class="btn btn-icon-only red" type="submit" value="{{ noti.id }}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            {% else %}
                         {% for noti in notificaciones %}
                             <tr>
                                 <td>
@@ -101,6 +138,7 @@
                                 </td>
                             </tr>
                         {% endfor %}
+                                {% endif %}
                         </tbody>
                     </table>
                 </div>
