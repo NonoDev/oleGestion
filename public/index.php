@@ -440,33 +440,66 @@ $app->post('/', function() use ($app) {
         $registros = array();
         $registros = $_POST;
         array_pop($registros);
+        $usuario = ORM::for_table('usuario')->find_one($_POST['enviar']);
         $error = "";
         $ok = "";
         $check = false;
         $cons = ORM::for_table('usuario')
             ->where('nombre_usuario',$registros['usuario'])
             ->find_one();
-        if($registros['password'] != $registros['password2']){
-            $error = "Las contraseñas no coinciden";
-            $check = false;
-            $app->render('nuevo_usuario.html.twig',[
-                'mensajeError' => $error,
-                'nombre' => $_SESSION['usuarioLogin']
-            ]);
-            die();
+        if($_POST['enviar']=="") {
+            if ($registros['password'] != $registros['password2']) {
+                $error = "Las contraseñas no coinciden";
+                $check = false;
+                $app->render('nuevo_usuario.html.twig', [
+                    'mensajeError' => $error,
+                    'nombre' => $_SESSION['usuarioLogin']
+                ]);
+                die();
+            } else {
+                $check = true;
+            }
         }else{
-            $check = true;
+            if ($registros['password'] != $registros['password2']) {
+                $error = "Las contraseñas no coinciden";
+                $check = false;
+                $app->render('nuevo_usuario.html.twig', [
+                    'nombre1' => 'Editar',
+                    'mensajeError' => $error,
+                    'usuario' => $usuario,
+                    'nombre' => $_SESSION['usuarioLogin']
+                ]);
+                die();
+            } else {
+                $check = true;
+            }
         }
-        if($registros['email'] == $registros['email2']){
-            $error = "Los emails no pueden coincidir";
-            $check = false;
-            $app->render('nuevo_usuario.html.twig', [
-                'mensajeError' => $error,
-                'nombre' => $_SESSION['usuarioLogin']
-            ]);
-            die();
+        if($_POST['enviar']=="") {
+            if ($registros['email'] == $registros['email2']) {
+                $error = "Los emails no pueden coincidir";
+                $check = false;
+                $app->render('nuevo_usuario.html.twig', [
+                    'mensajeError' => $error,
+                    'nombre' => $_SESSION['usuarioLogin']
+                ]);
+                die();
+            } else {
+                $check = true;
+            }
         }else{
-            $check = true;
+            if ($registros['email'] == $registros['email2']) {
+                $error = "Los emails no pueden coincidir";
+                $check = false;
+                $app->render('nuevo_usuario.html.twig', [
+                    'nombre1' => 'Editar',
+                    'mensajeError' => $error,
+                    'usuario' => $usuario,
+                    'nombre' => $_SESSION['usuarioLogin']
+                ]);
+                die();
+            } else {
+                $check = true;
+            }
         }
         if($_POST['enviar']=="") {
             if ($cons) {
@@ -547,7 +580,6 @@ $app->post('/', function() use ($app) {
             $error = "Ha habido un fallo al registrar el usuario";
         }
         $app->render('nuevo_usuario.html.twig',[
-            'mensajeError' => $error,
             'mensajeOk' => $ok,
             'nombre' => $_SESSION['usuarioLogin']
         ]);
@@ -563,7 +595,6 @@ $app->post('/', function() use ($app) {
         $usuarios = ORM::for_table('usuario')
             ->find_many();
         $app->render('listar_usuario.html.twig',[
-            'mensajeError' => 'Fallo al eliminar el usuario',
             'mensajeOk' => 'Usuario eliminado de forma correcta',
             'usuarios' => $usuarios,
             'nombre' => $_SESSION['usuarioLogin']
