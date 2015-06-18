@@ -530,6 +530,11 @@ $app->post('/', function() use ($app) {
                 $usuario->email = $registros['email'];
                 $usuario->email_secundario = $registros['email2'];
                 $usuario->rol = $_POST['rol'];
+                if(isset($_POST['notificaciones'])){
+                    $usuario->notificaciones_carga = true;
+                }else{
+                    $usuario->notificaciones_carga = false;
+                }
                 $nuevo_usuario = ORM::for_table('usuario')->find_one($registros['usuario']);
                 if($registros['usuario'] != $nuevo_usuario){
                     $comp = ORM::for_table('usuario')->find_one($nuevo_usuario);
@@ -573,6 +578,11 @@ $app->post('/', function() use ($app) {
                 $usuario->email = $registros['email'];
                 $usuario->email_secundario = $registros['email2'];
                 $usuario->rol = $_POST['rol'];
+                if(isset($_POST['notificaciones'])){
+                    $usuario->notificaciones_carga = true;
+                }else{
+                    $usuario->notificaciones_carga = false;
+                }
                 $usuario->save();
                 $ok = "Usuario creado correctamente";
             }
