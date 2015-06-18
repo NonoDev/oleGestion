@@ -207,7 +207,9 @@ $app->post('/', function() use ($app) {
 
 
             $_SESSION['usuarioLogin'] = $cons;
-            $app->render('inicio.html.twig');
+            $app->render('inicio.html.twig', [
+                'nombre' => $_SESSION['usuarioLogin']
+            ]);
         }else{
             $app->render('login.html.twig',array('errorLogin' => 'ok'));
         }
@@ -266,7 +268,10 @@ $app->post('/', function() use ($app) {
                 $nuevoContratoSocios->save();
             }
 
-            $app->render('inicio.html.twig',array('mensajeOk' => 'Contrato añadido con éxito'));
+            $app->render('inicio.html.twig',[
+                'mensajeOk' => 'Contrato añadido con éxito',
+                'nombre' => $_SESSION['usuarioLogin']
+            ]);
         }
     }
 
@@ -319,7 +324,11 @@ $app->post('/', function() use ($app) {
             $miArray[$i]['socios'] = $socios;
             $i++;
         }
-        $app->render('listar_contrato.html.twig',array('datosCont' => $miArray,'mensajeError' => 'Contrato eliminado con éxito'));
+        $app->render('listar_contrato.html.twig',[
+            'datosCont' => $miArray,
+            'mensajeError' => 'Contrato eliminado con éxito',
+            'nombre' => $_SESSION['usuarioLogin']
+        ]);
     }
 
     //Al pulsar para editar el contrato deseado. LLevará a una sección que nos permitirá hacer cambios
@@ -340,7 +349,13 @@ $app->post('/', function() use ($app) {
             ->where('rol','Comprador')
             ->find_many();
 
-        $app->render('nuevo_contrato.html.twig',array('datosCont' => $cons,'sociosSelecc' => $sociosSelecc,'socios' => $soc, 'corredores' => $corr, 'compradores' => $comp));
+        $app->render('nuevo_contrato.html.twig',[
+            'datosCont' => $cons,
+            'sociosSelecc' => $sociosSelecc,
+            'socios' => $soc, 'corredores' => $corr,
+            'compradores' => $comp,
+            'nombre' => $_SESSION['usuarioLogin']
+        ]);
     }
 
     //Al pulsar el boton editar una vez hemos hecho los cambios en el contrato
@@ -413,9 +428,14 @@ $app->post('/', function() use ($app) {
             $miArray[$i]['socios'] = $socios;
             $i++;
         }
-        $app->render('listar_contrato.html.twig', array('datosCont' => $miArray, 'mensajeOk' => 'Contrato modificado con éxito'));
+        $app->render('listar_contrato.html.twig', [
+            'datosCont' => $miArray,
+            'mensajeOk' => 'Contrato modificado con éxito',
+            'nombre' => $_SESSION['usuarioLogin']
+        ]);
+        die();
     }
-    // REGISTRO USUARIOS
+    // REGISTRO Y EDICION USUARIOS
     if(isset($_POST['enviar'])){
         $registros = array();
         $registros = $_POST;
@@ -429,9 +449,10 @@ $app->post('/', function() use ($app) {
         if($registros['password'] != $registros['password2']){
             $error = "Las contraseñas no coinciden";
             $check = false;
-            $app->render('nuevo_usuario.html.twig',array(
-                'mensajeError' => $error
-            ));
+            $app->render('nuevo_usuario.html.twig',[
+                'mensajeError' => $error,
+                'nombre' => $_SESSION['usuarioLogin']
+            ]);
             die();
         }else{
             $check = true;
@@ -439,9 +460,10 @@ $app->post('/', function() use ($app) {
         if($registros['email'] == $registros['email2']){
             $error = "Los emails no pueden coincidir";
             $check = false;
-            $app->render('nuevo_usuario.html.twig',array(
-                'mensajeError' => $error
-            ));
+            $app->render('nuevo_usuario.html.twig', [
+                'mensajeError' => $error,
+                'nombre' => $_SESSION['usuarioLogin']
+            ]);
             die();
         }else{
             $check = true;
@@ -450,9 +472,10 @@ $app->post('/', function() use ($app) {
             if ($cons) {
                 $error = "Ya existe un usuario registrado con ese nombre";
                 $check = false;
-                $app->render('nuevo_usuario.html.twig', array(
-                    'mensajeError' => $error
-                ));
+                $app->render('nuevo_usuario.html.twig', [
+                    'mensajeError' => $error,
+                    'nombre' => $_SESSION['usuarioLogin']
+                ]);
                 die();
             } else {
                 $check = true;
@@ -480,21 +503,25 @@ $app->post('/', function() use ($app) {
                     if ($comp) {
                         $error = "Ya existe un usuario registrado con ese nombre";
                         $check = false;
-                        $app->render('nuevo_usuario.html.twig',array(
-                            'nombre' => 'Editar',
+                        $app->render('nuevo_usuario.html.twig',[
+                            'mensajeError' => $error,
+                            'nombre1' => 'Editar',
                             'usuario' => $usuario,
-                            'metodo' => 'editar'
-                        ));
+                            'metodo' => 'editar',
+                            'nombre' => $_SESSION['usuarioLogin']
+                        ]);
                         die();
                     } else {
                         $usuario->save();
                         $ok = "Usuario modificado correctamente";
                         $usuarios = ORM::for_table('usuario')
                             ->find_many();
-                        $app->render('listar_usuario.html.twig',array(
+                        $app->render('listar_usuario.html.twig',[
                             'mensajeOk' => $ok,
-                            'usuarios' => $usuarios
-                        ));
+                            'usuarios' => $usuarios,
+                            'nombre' => $_SESSION['usuarioLogin']
+                        ]);
+                        die();
                     }
                 }
                 $usuario->save();
@@ -519,10 +546,12 @@ $app->post('/', function() use ($app) {
         }else{
             $error = "Ha habido un fallo al registrar el usuario";
         }
-        $app->render('nuevo_usuario.html.twig',array(
+        $app->render('nuevo_usuario.html.twig',[
             'mensajeError' => $error,
             'mensajeOk' => $ok,
-        ));
+            'nombre' => $_SESSION['usuarioLogin']
+        ]);
+        die();
     }
     // ELIMINAR USUARIOS
     if(isset($_POST['eliminar_user'])){
@@ -533,22 +562,24 @@ $app->post('/', function() use ($app) {
         $user->save();
         $usuarios = ORM::for_table('usuario')
             ->find_many();
-        $app->render('listar_usuario.html.twig',array(
+        $app->render('listar_usuario.html.twig',[
             'mensajeError' => 'Fallo al eliminar el usuario',
             'mensajeOk' => 'Usuario eliminado de forma correcta',
-            'usuarios' => $usuarios
-        ));
+            'usuarios' => $usuarios,
+            'nombre' => $_SESSION['usuarioLogin']
+        ]);
     }
     // EDITAR USUARIOS
     if(isset($_POST['editar_user'])){
         $user = ORM::for_table('usuario')
             ->where('id',$_POST['editar_user'])
             ->find_one();
-        $app->render('nuevo_usuario.html.twig',array(
-            'nombre' => 'Editar',
+        $app->render('nuevo_usuario.html.twig',[
+            'nombre1' => 'Editar',
             'usuario' => $user,
-            'metodo' => 'editar'
-        ));
+            'metodo' => 'editar',
+            'nombre' => $_SESSION['usuarioLogin']
+        ]);
     }
 
     // ELIMINAR NOTIFICACIONES
@@ -560,11 +591,11 @@ $app->post('/', function() use ($app) {
         $noti->save();
         $notificaciones = ORM::for_table('notificacion')
             ->find_many();
-        $app->render('listar_notificacion.html.twig',array(
-            'mensajeError' => 'Fallo al eliminar la notificación',
+        $app->render('listar_notificacion.html.twig',[
             'mensajeOk' => 'Notificación eliminada de forma correcta',
-            'notificaciones'=> $notificaciones
-        ));
+            'notificaciones'=> $notificaciones,
+            'nombre' => $_SESSION['usuarioLogin']
+        ]);
     }
 });
 $app->run();
