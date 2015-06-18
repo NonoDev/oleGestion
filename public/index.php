@@ -42,23 +42,15 @@ $app->get('/logout', function() use ($app) {
     $app->redirect($app->router()->urlFor('inicio'));
 });
 
-//Página para las nuevas notificaciones
-/*$app->get('/nueva_notificacion', function() use ($app) {
-    if(isset($_SESSION['usuarioLogin'])){
-        $app->render('inicio.html.twig');
-    }else {
-        $app->render('login.html.twig');
-    }
-});*/
+
 
 //Página nuevas notificaciones
 $app->get('/nueva_notificacion', function() use ($app) {
     $contratos = ORM::for_table('contrato')
         ->find_many();
 
-
     $app->render('nueva_notificacion.html.twig',array('contratos' => $contratos));
-
+    die();
 })->name('nueva_notificacion');
 
 //ajax contratos
@@ -80,8 +72,21 @@ $app->get('/rellenarContrato/:valor', function($valor){
 
 //Página listar notificaciones
 $app->get('/listar_notificacion', function() use ($app) {
-
+    $fecha_actual=date("Y-m-d");
     $notificaciones = ORM::for_table('notificacion')
+        ->join('usuario', array('us1.id', '=', 'notificacion.id_usuario_creador'),'us1')
+        ->join('usuario', array('us2.id', '=', 'notificacion.id_socio'),'us2')
+        ->join('contrato', array('contrato.id', '=', 'notificacion.id_contrato'))
+        ->select('us1.nombre','nombreCreador')
+        ->select('us2.nombre','nombreSocio')
+        ->select('contrato.boletin')
+        ->select('notificacion.id')
+        ->select('notificacion.cisternas')
+        ->select('notificacion.fecha_carga')
+        ->select('notificacion.fecha_alta')
+        ->select('notificacion.estado')
+        ->where_gte('fecha_carga',$fecha_actual)
+        ->order_by_asc('notificacion.fecha_carga')
         ->find_many();
     $app->render('listar_notificacion.html.twig', [
         'notificaciones' => $notificaciones
@@ -534,18 +539,134 @@ $app->post('/', function() use ($app) {
 
     // ELIMINAR NOTIFICACIONES
     if(isset($_POST['eliminar_noti'])){
-        $noti = ORM::for_table('notificacion')
+        $kk = ORM::for_table('notificacion')
             ->where('id',$_POST['eliminar_noti'])
             ->find_one();
-        $noti->delete();
-        $noti->save();
+        $kk->delete();
+
+        $fecha_actual=date("Y-m-d");
         $notificaciones = ORM::for_table('notificacion')
+            ->join('usuario', array('us1.id', '=', 'notificacion.id_usuario_creador'),'us1')
+            ->join('usuario', array('us2.id', '=', 'notificacion.id_socio'),'us2')
+            ->join('contrato', array('contrato.id', '=', 'notificacion.id_contrato'))
+            ->select('us1.nombre','nombreCreador')
+            ->select('us2.nombre','nombreSocio')
+            ->select('contrato.boletin')
+            ->select('notificacion.id')
+            ->select('notificacion.cisternas')
+            ->select('notificacion.fecha_carga')
+            ->select('notificacion.fecha_alta')
+            ->select('notificacion.estado')
+            ->where_gte('fecha_carga',$fecha_actual)
+            ->order_by_asc('notificacion.fecha_carga')
             ->find_many();
+
         $app->render('listar_notificacion.html.twig',array(
-            'mensajeError' => 'Fallo al eliminar la notificación',
             'mensajeOk' => 'Notificación eliminada de forma correcta',
             'notificaciones'=> $notificaciones
         ));
+        die();
+    }
+
+    if(isset($_POST['botonCreaNotificacion'])){
+        if($_POST['contrato']==0){
+            $contratos = ORM::for_table('contrato')
+                ->find_many();
+            $app->render('nueva_notificacion.html.twig',array('mensajeError' => 'Es necesario seleccionar un contrato','contratos' => $contratos ));
+            die();
+        }
+        if($_POST['socio']==0 ){
+            $contratos = ORM::for_table('contrato')
+                ->find_many();
+            $app->render('nueva_notificacion.html.twig',array('mensajeError' => 'Es necesario seleccionar un socio para el contrato','contratos' => $contratos ));
+            die();
+        }else{
+            if($_POST['cisternas']==0){
+                $contratos = ORM::for_table('contrato')
+                    ->find_many();
+                $app->render('nueva_notificacion.html.twig',array('mensajeError' => 'Debe de seleccionar las cisternas obligatoriamente','contratos' => $contratos ));
+                die();
+            }
+            $compMat = 0;
+            $fecha=date("Y-m-d");
+            $fecha_y_hora=date("Y-m-d H:i:s");
+
+            $nuevaNotificacion = ORM::for_table('notificacion')
+                ->create();
+
+            $nuevaNotificacion->id_contrato = $_POST['contrato'];
+            $nuevaNotificacion->id_socio = $_POST['socio'];
+            $nuevaNotificacion->cisternas = $_POST['cisternas'];
+            $nuevaNotificacion->estado = $_POST['estado'];
+            if($_POST['fecha_carga']) {
+                $nuevaNotificacion->fecha_carga = $fecha;
+            }
+            $nuevaNotificacion->fecha_alta = $fecha_y_hora;
+            $nuevaNotificacion->fecha_modificacion = $fecha_y_hora;
+            $nuevaNotificacion->id_usuario_creador = $_SESSION['usuarioLogin']['id'];
+            $nuevaNotificacion->id_usuario_modifica = $_SESSION['usuarioLogin']['id'];
+            if($_POST['observaciones']){
+                $nuevaNotificacion->observaciones = $_POST['observaciones'];
+            }
+
+            //Rellena una variable que indicará si vienen matrículas con el formulario
+            for($i=1;$i<=$_POST['cisternas'];$i++){
+                if($_POST['matricula_'.$i]){
+                    $compMat++;
+                }
+            }
+
+            //Comprobación de que se han marcado cisternas en la notificación
+            if($_POST['cisternas']>1) {
+                //Comprobación. Si se han marcado cisternas pero ninguna matrícula se hace la inserción
+                if ($compMat == $_POST['cisternas'] || $compMat==0) {
+                    $nuevaNotificacion->save();
+                // Comprobación de que si se introducen matrículas se introduzcan todas las marcadas en las cisternas
+                } else {
+                    $contratos = ORM::for_table('contrato')
+                        ->find_many();
+                    $app->render('nueva_notificacion.html.twig', array('mensajeError' => 'No puede dejar campos vacíos en las matrículas','contratos' => $contratos));
+                    die();
+                }
+            }else{
+                if ($compMat == $_POST['cisternas']) {
+                    $nuevaNotificacion->save();
+                }
+            }
+
+            //$nuevaNotificacion->save();
+            $idNotificacion = ORM::for_table('notificacion')
+                ->order_by_desc('id')
+                ->find_many();
+            if($compMat!=0){
+                for($i=1;$i<=$_POST['cisternas'];$i++){
+                    if($_POST['matricula_'.$i]){
+                        $idNotificacion = ORM::for_table('notificacion')
+                            ->order_by_desc('id')
+                            ->find_many();
+                        $nuevaMatricula = ORM::for_table('matricula')
+                            ->create();
+                        $nuevaMatricula->id_notificacion = $idNotificacion[0]['id'];
+                        $nuevaMatricula->matricula = $_POST['matricula_'.$i];
+                        $nuevaMatricula->save();
+                    }
+                }
+            }
+            $app->render('inicio.html.twig',array('mensajeOk' => 'Notificación agregada con éxito'));
+            die();
+        };
+    };
+
+    if($_POST['editar_noti']){
+        $notificacion = ORM::for_table('notificacion')
+            ->where('id',$_POST['editar_noti'])
+            ->find_one();
+
+        $contratos = ORM::for_table('contrato')
+            ->find_many();
+
+        $app->render('nueva_notificacion.html.twig',array('contratos' => $contratos,'notificacion' => $notificacion));
+        die();
     }
 });
 $app->run();

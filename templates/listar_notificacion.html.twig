@@ -69,29 +69,29 @@
                         {% for noti in notificaciones %}
                             <tr>
                                 <td>
-                                    {{ noti.id_contrato }}
+                                    {{ noti.boletin }}
                                 </td>
                                 <td>
-                                    {{ noti.id_socio }}
+                                    {{ noti.nombreSocio }}
                                 </td>
                                 <td>
                                     {{ noti.cisternas }}
                                 </td>
                                 <td>
-                                    {{ noti.fecha_carga|date('d/m/Y H:i:s') }}
+                                    {{ noti.fecha_carga }}
                                 </td>
                                 <td>
-                                    {{ noti.fecha_alta|date('d/m/Y H:i:s') }}
+                                    {{ noti.fecha_alta }}
                                 </td>
                                 <td>
-                                    {{ noti.id_usuario_creador }}
+                                    {{ noti.nombreCreador }}
                                 </td>
                                 <td>
                                     {{ noti.estado }}
                                 </td>
                                 <td>
                                     <form action="/" method="post">
-                                        <button name="editar_noti" class="btn btn-icon-only blue" type="submit" value="">
+                                        <button name="editar_noti" class="btn btn-icon-only blue" type="submit" value="{{ noti.id }}">
                                             <i class="fa fa-edit"></i>
                                         </button>
                                         <button name="eliminar_noti" class="btn btn-icon-only red" type="submit" value="{{ noti.id }}">
